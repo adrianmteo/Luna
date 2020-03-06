@@ -2,13 +2,19 @@
 
 A super lightweight dark mode automatic switcher for Windows 10
 
+**Features**
+
+- Set light/dark theme activation times
+- Toggle app/system theme based on activation times
+- Change wallpaper to light/dark activation times
+
 ![](.repo/recording.gif)
 
 [![](.repo/download.png)](https://github.com/adrianmteo/Darky/releases/latest/download/DarkySetup.exe)
 
 ## Install
 
-You can download and install the latest installer from [here](https://github.com/adrianmteo/Darky/releases).
+You can download and install the latest release from [here](https://github.com/adrianmteo/Darky/releases).
 
 **Note:** Windows SmartScreen might show you this warning screen. This is because the setup file is not being signed but the app is 100% safe to be run.
 
