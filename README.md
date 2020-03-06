@@ -2,13 +2,19 @@
 
 A super lightweight dark mode automatic switcher for Windows 10
 
+**Features**
+
+- Set light/dark theme activation times
+- Toggle app/system theme based on activation times
+- Change wallpaper to light/dark activation times
+
 ![](.repo/recording.gif)
 
 [![](.repo/download.png)](https://github.com/adrianmteo/Darky/releases/latest/download/DarkySetup.exe)
 
 ## Install
 
-You can download and install the latest installer from [here](https://github.com/adrianmteo/Darky/releases).
+You can download and install the latest release from [here](https://github.com/adrianmteo/Darky/releases).
 
 **Note:** Windows SmartScreen might show you this warning screen. This is because the setup file is not being signed but the app is 100% safe to be run.
 
@@ -20,7 +26,9 @@ I've built this app in my spare time to resolve my frustration with Windows 10 f
 
 This is a super lightweight app built using C# and WPF technologies. It creates task schedules for light/dark theme times. There are no running processes in the background and there is not need to start when Windows starts.
 
-Dark theme used in app: [Infragistics Metro Light and Dark Theme for WPF](https://www.infragistics.com/community/blogs/b/blagunas/posts/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls).
+3<sup>rd</sup> party libraries used:
+- [Infragistics Metro Light and Dark Theme for WPF](https://www.infragistics.com/community/blogs/b/blagunas/posts/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls)
+- [TaskScheduler](https://github.com/dahall/taskscheduler)
 
 ## Command line parameters
 
