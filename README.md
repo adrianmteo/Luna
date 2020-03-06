@@ -30,7 +30,7 @@ This is a super lightweight app built using C# and WPF technologies. It creates 
 
 ## Future plans
 
-As time passes I might add new features (or contributions) to complete an experience that Windows 10 does't have (yet).
+As time passes I might add new features (or contributions) to complete an experience that Windows 10 doesn't have (yet).
 
 ## Contributions
 
