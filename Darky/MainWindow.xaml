@@ -1,0 +1,135 @@
+﻿<Window x:Class="Darky.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Darky"
+        mc:Ignorable="d"
+        Title="Darky" Width="400" Height="500"
+        Background="{DynamicResource ButtonBackgroundBrush}"
+        BorderBrush="{DynamicResource ButtonBorderBrush}" BorderThickness="1"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid MouseDown="Title_MouseDown" Background="Transparent">
+                <Label Content="Darky" FontSize="24" Margin="24 12 0 12" />
+            </Grid>
+            <StackPanel Grid.Column="1" VerticalAlignment="Top" Orientation="Horizontal">
+                <Button Style="{StaticResource CloseButtonStyle}" Click="ButtonClose_Click">
+                    <Path
+                        Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}"
+                        Data="m413.348 24.354-24.354-24.354-182.32 182.32-182.32-182.32-24.354 24.354 182.32 182.32-182.32 182.32 24.354 24.354 182.32-182.32 182.32 182.32 24.354-24.354-182.32-182.32z"
+                        Width="13" Height="13" Stretch="Fill" Margin="16" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel Margin="24 0">
+                <CheckBox Content="Enable automatic theme" IsChecked="{Binding Enabled}" Panel.ZIndex="100" />
+                <local:AnimatedView Value="{Binding Enabled}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 12">
+                            <StackPanel Margin="0 0 24 0">
+                                <Label Content="Light theme time" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Width="40" Margin="6 0 0 0" KeyUp="TextBox_KeyUp">
+                                        <TextBox.Text>
+                                            <Binding Path="LightThemeHour" StringFormat="00" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <local:NumberRule Min="0" Max="11" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <Label Content=":" />
+                                    <TextBox Width="40" KeyUp="TextBox_KeyUp">
+                                        <TextBox.Text>
+                                            <Binding Path="LightThemeMinute" StringFormat="00" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <local:NumberRule Min="0" Max="59" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <Label Content="AM" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="Dark theme time" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Width="40" Margin="6 0 0 0" KeyUp="TextBox_KeyUp">
+                                        <TextBox.Text>
+                                            <Binding Path="DarkThemeHour" StringFormat="00" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <local:NumberRule Min="0" Max="11" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <Label Content=":" />
+                                    <TextBox Width="40" KeyUp="TextBox_KeyUp">
+                                        <TextBox.Text>
+                                            <Binding Path="DarkThemeMinute" StringFormat="00" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <local:NumberRule Min="0" Max="59" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <Label Content="PM" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <CheckBox Content="Change app theme" IsChecked="{Binding ChangeAppTheme}" />
+                        <CheckBox Content="Change system theme" IsChecked="{Binding ChangeSystemTheme}" />
+                        <CheckBox Content="Change wallpaper" IsChecked="{Binding ChangeWallpaper}" />
+                        <local:AnimatedView Value="{Binding ChangeWallpaper}">
+                            <StackPanel Margin="0 12">
+                                <Label Content="Light theme wallpaper" />
+                                <Grid Margin="6 0 6 8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="{Binding LightWallpaperPath}" IsReadOnly="True" Margin="0 0 8 0" />
+                                    <Button Content="Browse..." Grid.Column="1" Click="ButtonBrowseLightWallpaper_Click"  />
+                                </Grid>
+                                <Label Content="Dark theme wallpaper" />
+                                <Grid Margin="6 0 6 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="{Binding DarkWallpaperPath}" IsReadOnly="True" Margin="0 0 8 0" />
+                                    <Button Content="Browse..." Grid.Column="1" Click="ButtonBrowseDarkWallpaper_Click"  />
+                                </Grid>
+                            </StackPanel>
+                        </local:AnimatedView>
+                    </StackPanel>
+                </local:AnimatedView>
+            </StackPanel>
+        </ScrollViewer>
+        <Grid Margin="30 24" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Github" Click="ButtonGithub_Click" />
+            <Button Content="Issues" Grid.Column="2" Click="ButtonIssues_Click" />
+            <Button Content="About" Grid.Column="4" Click="ButtonAbout_Click" />
+        </Grid>
+    </Grid>
+</Window>
