@@ -2,9 +2,9 @@
 
 A super lightweight dark mode automatic switcher for Windows 10
 
-![](.repo/screenshot.png)
+![](.repo/recording.gif)
 
-[![](.repo/download.png)](https://github.com/adrianmteo/Darky/releases)
+[![](.repo/download.png)](https://github.com/adrianmteo/Darky/releases/latest/download/DarkySetup.exe)
 
 ## Install
 
