@@ -29,6 +29,10 @@ WizardStyle=modern
 UninstallDisplayIcon={app}\{#MyAppExeName}
 UninstallDisplayName={#MyAppName}
 DirExistsWarning=no
+VersionInfoCompany={#MyAppPublisher}
+VersionInfoCopyright=Copyright © {#MyAppPublisher} 2020
+VersionInfoProductVersion={#MyAppVersion}
+VersionInfoVersion={#MyAppVersion}
 
 [Code]
 procedure InitializeWizard;
