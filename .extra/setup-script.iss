@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Darky"
-#define MyAppVersion "1.0.0.0"
+#define MyAppVersion "1.0"
 #define MyAppPublisher "Adrian Mateoaea"
 #define MyAppURL "https://github.com/adrianmteo/Darky"
 #define MyAppExeName "Darky.exe"
@@ -22,7 +22,7 @@ DefaultDirName={localappdata}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
-OutputBaseFilename=Darky Setup
+OutputBaseFilename={#MyAppName}Setup
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern

@@ -16,7 +16,7 @@ This is a super lightweight app built using C# and WPF technologies. It creates 
 
 ## Command line parameters
 
-| Parameter | Desription                                              |
+| Parameter | Description                                             |
 | --------- | ------------------------------------------------------- |
 | `/light`  | Switches to the light theme based on the saved settings |
 | `/dark`   | Switches to the dark theme based on the saved settings  |
