@@ -20,6 +20,8 @@ I've built this app in my spare time to resolve my frustration with Windows 10 f
 
 This is a super lightweight app built using C# and WPF technologies. It creates task schedules for light/dark theme times. There are no running processes in the background and there is not need to start when Windows starts.
 
+Dark theme used in app: [Infragistics Metro Light and Dark Theme for WPF](https://www.infragistics.com/community/blogs/b/blagunas/posts/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls).
+
 ## Command line parameters
 
 | Parameter | Description                                             |

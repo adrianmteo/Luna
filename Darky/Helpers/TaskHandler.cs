@@ -50,7 +50,7 @@ namespace Darky.Helpers
                 lightModeTask.Settings.DisallowStartIfOnBatteries = false;
                 lightModeTask.Settings.StartWhenAvailable = true;
 
-                folder.RegisterTaskDefinition(@"Light mode", lightModeTask);
+                folder.RegisterTaskDefinition(@"Light theme", lightModeTask);
 
                 var darkModeTask = ts.NewTask();
                 darkModeTask.Triggers.Add(new DailyTrigger { StartBoundary = darkTime, DaysInterval = 1 });
@@ -58,7 +58,7 @@ namespace Darky.Helpers
                 darkModeTask.Settings.DisallowStartIfOnBatteries = false;
                 darkModeTask.Settings.StartWhenAvailable = true;
 
-                folder.RegisterTaskDefinition(@"Dark mode", darkModeTask);
+                folder.RegisterTaskDefinition(@"Dark theme", darkModeTask);
             }
         }
 
