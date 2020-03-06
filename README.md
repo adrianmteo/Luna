@@ -10,13 +10,19 @@ A super lightweight dark mode automatic switcher for Windows 10
 
 You can download and install the latest installer from [here](https://github.com/adrianmteo/Darky/releases).
 
+**Note:** Windows SmartScreen might show you this warning screen. This is because the setup file is not being signed but the app is 100% safe to be run.
+
+![](.repo/smartscreen.png)
+
 ## Description
+
+I've built this app in my spare time to resolve my frustration with Windows 10 for not having automatic dark theme switcher. This may be included in the next releases of Windows 10 but for now here is Darky!
 
 This is a super lightweight app built using C# and WPF technologies. It creates task schedules for light/dark theme times. There are no running processes in the background and there is not need to start when Windows starts.
 
 ## Command line parameters
 
-| Parameter | Desription                                              |
+| Parameter | Description                                             |
 | --------- | ------------------------------------------------------- |
 | `/light`  | Switches to the light theme based on the saved settings |
 | `/dark`   | Switches to the dark theme based on the saved settings  |
