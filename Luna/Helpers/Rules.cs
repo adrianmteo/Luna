@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace Darky
+namespace Luna
 {
     public class NumberRule : ValidationRule
     {

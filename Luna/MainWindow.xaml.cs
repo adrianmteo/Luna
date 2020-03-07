@@ -1,5 +1,5 @@
-﻿using Darky.Helpers;
-using Darky.Properties;
+﻿using Luna.Helpers;
+using Luna.Properties;
 using Microsoft.Win32;
 using System;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Darky
+namespace Luna
 {
     public partial class MainWindow : Window
     {
@@ -108,12 +108,12 @@ namespace Darky
 
         private void ButtonGithub_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/adrianmteo/Darky");
+            Process.Start("https://github.com/adrianmteo/Luna");
         }
 
         private void ButtonIssues_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("https://github.com/adrianmteo/Darky/issues");
+            Process.Start("https://github.com/adrianmteo/Luna/issues");
         }
 
         private void ButtonAbout_Click(object sender, RoutedEventArgs e)

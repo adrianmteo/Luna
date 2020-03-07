@@ -1,9 +1,9 @@
-﻿using Darky.Helpers;
-using Darky.Properties;
+﻿using Luna.Helpers;
+using Luna.Properties;
 using System;
 using System.Windows;
 
-namespace Darky
+namespace Luna
 {
     public partial class App : Application
     {

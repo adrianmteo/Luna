@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darky", "Darky\Darky.csproj", "{2DE9EC75-02AA-471B-A2CD-58A19F7BC391}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Luna", "Luna\Luna.csproj", "{2DE9EC75-02AA-471B-A2CD-58A19F7BC391}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

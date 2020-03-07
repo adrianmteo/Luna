@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Darky.Helpers
+namespace Luna.Helpers
 {
     internal sealed class win32
     {
