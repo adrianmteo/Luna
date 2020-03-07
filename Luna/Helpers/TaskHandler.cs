@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32.TaskScheduler;
 
-namespace Darky.Helpers
+namespace Luna.Helpers
 {
     class TaskHandler
     {
@@ -15,7 +15,7 @@ namespace Darky.Helpers
         {
             using (TaskService ts = new TaskService())
             {
-                var folder = ts.RootFolder.SubFolders.FirstOrDefault(e => e.Name == "Darky");
+                var folder = ts.RootFolder.SubFolders.FirstOrDefault(e => e.Name == "Luna");
 
                 if (folder != null)
                 {
@@ -42,7 +42,7 @@ namespace Darky.Helpers
 
             using (TaskService ts = new TaskService())
             {
-                var folder = ts.RootFolder.CreateFolder("Darky");
+                var folder = ts.RootFolder.CreateFolder("Luna");
 
                 var lightModeTask = ts.NewTask();
                 lightModeTask.Triggers.Add(new DailyTrigger { StartBoundary = lightTime, DaysInterval = 1 });

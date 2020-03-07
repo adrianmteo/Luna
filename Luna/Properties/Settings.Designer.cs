@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Darky.Properties {
+namespace Luna.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

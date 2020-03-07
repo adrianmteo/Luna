@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Darky.Helpers
+namespace Luna.Helpers
 {
     class RegistryHandler
     {
