@@ -1,4 +1,4 @@
-# Darky
+# Luna
 
 A super lightweight dark mode automatic switcher for Windows 10
 
@@ -10,11 +10,11 @@ A super lightweight dark mode automatic switcher for Windows 10
 
 ![](.repo/recording.gif)
 
-[![](.repo/download.png)](https://github.com/adrianmteo/Darky/releases/latest/download/DarkySetup.exe)
+[![](.repo/download.png)](https://github.com/adrianmteo/Luna/releases/latest/download/LunaSetup.exe)
 
 ## Install
 
-You can download and install the latest release from [here](https://github.com/adrianmteo/Darky/releases).
+You can download and install the latest release from [here](https://github.com/adrianmteo/Luna/releases).
 
 **Note:** Windows SmartScreen might show you this warning screen. This is because the setup file is not being signed but the app is 100% safe to be run.
 
@@ -22,7 +22,7 @@ You can download and install the latest release from [here](https://github.com/a
 
 ## Description
 
-I've built this app in my spare time to resolve my frustration with Windows 10 for not having automatic dark theme switcher. This may be included in the next releases of Windows 10 but for now here is Darky!
+I've built this app in my spare time to resolve my frustration with Windows 10 for not having automatic dark theme switcher. This may be included in the next releases of Windows 10 but for now here is Luna!
 
 This is a super lightweight app built using C# and WPF technologies. It creates task schedules for light/dark theme times. There are no running processes in the background and there is not need to start when Windows starts.
 

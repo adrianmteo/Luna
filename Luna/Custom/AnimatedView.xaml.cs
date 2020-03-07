@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Darky
+namespace Luna
 {
     public partial class AnimatedView : UserControl
     {
