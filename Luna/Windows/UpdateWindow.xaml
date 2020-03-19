@@ -1,0 +1,112 @@
+﻿<Window x:Class="Luna.Windows.UpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:Luna.Models"
+        xmlns:controls="clr-namespace:Luna.Controls"
+        mc:Ignorable="d"
+        Title="Update" Width="350"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize" ShowInTaskbar="False"
+        BorderThickness="1"
+        SnapsToDevicePixels="True" SizeToContent="Height">
+
+    <Window.Background>
+        <SolidColorBrush Color="{StaticResource Color_009}" />
+    </Window.Background>
+
+    <Window.BorderBrush>
+        <SolidColorBrush Color="{StaticResource Color_008}" />
+    </Window.BorderBrush>
+    
+    <Window.Resources>
+        <DataTemplate x:Key="CheckingTemplate">
+            <StackPanel>
+                <Label Content="Checking for updates..." />
+                <ProgressBar IsIndeterminate="True" Height="7" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="NoUpdateTemplate">
+            <Label Padding="0">
+                <TextBlock>
+                    No new updates found. Last check was <Run Text="{Binding LastCheck}" />.
+                </TextBlock>
+            </Label>
+        </DataTemplate>
+        <DataTemplate x:Key="NewUpdateTemplate">
+            <StackPanel>
+                <Label Padding="0 0 0 16">
+                    <TextBlock>
+                        Update to version <Run Text="{Binding Version}" /> is now available for download
+                    </TextBlock>
+                </Label>
+                <Button Content="Download now" HorizontalAlignment="Right" Click="DownloadButton_Click" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="DownloadingTemplate">
+            <StackPanel>
+                <Grid>
+                    <Label Content="Downloading update..." />
+                    <Label HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Progress, StringFormat={}{0:0}%}" />
+                    </Label>
+                </Grid>
+                <ProgressBar Value="{Binding Progress}" Height="7" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ReadyTemplate">
+            <StackPanel>
+                <Label Padding="0 0 0 16">
+                    <TextBlock>
+                        Update to version <Run Text="{Binding Version}" /> is now ready to be installed
+                    </TextBlock>
+                </Label>
+                <Button Content="Update now" HorizontalAlignment="Right" Click="InstallButton_Click" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ErrorView">
+            <StackPanel>
+                <Label Content="An error has occured. Check logs" />
+                <Button Content="Try Again" HorizontalAlignment="Right" Click="CheckButton_Click" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <controls:WindowHeader />
+        <ContentPresenter Grid.Row="1" Margin="16" Content="{Binding}">
+            <ContentPresenter.Style>
+                <Style TargetType="ContentPresenter">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static models:UpdateStatus.Checking}">
+                            <Setter Property="ContentTemplate" Value="{StaticResource CheckingTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static models:UpdateStatus.NewUpdate}">
+                            <Setter Property="ContentTemplate" Value="{StaticResource NewUpdateTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static models:UpdateStatus.NoUpdate}">
+                            <Setter Property="ContentTemplate" Value="{StaticResource NoUpdateTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static models:UpdateStatus.Downloading}">
+                            <Setter Property="ContentTemplate" Value="{StaticResource DownloadingTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static models:UpdateStatus.Ready}">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ReadyTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static models:UpdateStatus.Error}">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ErrorView}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentPresenter.Style>
+        </ContentPresenter>
+    </Grid>
+</Window>

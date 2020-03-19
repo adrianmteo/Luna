@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Luna"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.1"
 #define MyAppPublisher "Adrian Mateoaea"
 #define MyAppURL "https://github.com/adrianmteo/Luna"
 #define MyAppExeName "Luna.exe"
@@ -30,17 +30,9 @@ UninstallDisplayIcon={app}\{#MyAppExeName}
 UninstallDisplayName={#MyAppName}
 DirExistsWarning=no
 VersionInfoCompany={#MyAppPublisher}
-VersionInfoCopyright=Copyright ï¿½ {#MyAppPublisher} 2020
+VersionInfoCopyright=Copyright © {#MyAppPublisher} 2020
 VersionInfoProductVersion={#MyAppVersion}
 VersionInfoVersion={#MyAppVersion}
-
-[Code]
-procedure InitializeWizard;
-begin
-  WizardForm.SelectDirBrowseLabel.Visible:=False;
-  WizardForm.DirEdit.Enabled:=False;
-  WizardForm.DirBrowseButton.Enabled:=False;
-end;
 
 [Messages]
 SetupAppTitle={#MyAppName} Setup
@@ -62,7 +54,7 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall
 
 [UninstallRun]
 Filename: "{app}\{#MyAppExeName}"; Parameters: "/clean"

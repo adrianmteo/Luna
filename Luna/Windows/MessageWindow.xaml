@@ -1,0 +1,42 @@
+﻿<Window x:Class="Luna.Windows.MessageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Luna.Windows"
+        xmlns:controls="clr-namespace:Luna.Controls"
+        mc:Ignorable="d"
+        Title="Window" Width="350"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
+        BorderThickness="1"
+        SnapsToDevicePixels="True" SizeToContent="Height">
+
+    <Window.Background>
+        <SolidColorBrush Color="{StaticResource Color_009}" />
+    </Window.Background>
+
+    <Window.BorderBrush>
+        <SolidColorBrush Color="{StaticResource Color_008}" />
+    </Window.BorderBrush>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <controls:WindowHeader />
+        <StackPanel Grid.Row="1" Margin="16">
+            <Label Padding="0 0 0 16">
+                <TextBlock Text="{Binding Caption, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" TextWrapping="Wrap" />
+            </Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="{Binding OK, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" Margin="0 0 8 0" Click="Button_Click_1" />
+                <Button Content="{Binding Cancel, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" Click="Button_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

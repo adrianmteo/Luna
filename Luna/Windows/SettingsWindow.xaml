@@ -1,0 +1,127 @@
+﻿<Window x:Class="Luna.Windows.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:utils="clr-namespace:Luna.Utils"
+        xmlns:models="clr-namespace:Luna.Models"
+        xmlns:controls="clr-namespace:Luna.Controls"
+        Title="Luna" Width="420"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" SizeToContent="Height"
+        BorderThickness="1"
+        SnapsToDevicePixels="True" Closing="Window_Closing">
+
+    <Window.Background>
+        <SolidColorBrush Color="{StaticResource Color_009}" />
+    </Window.Background>
+
+    <Window.BorderBrush>
+        <SolidColorBrush Color="{StaticResource Color_008}" />
+    </Window.BorderBrush>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <utils:ObjectComparatorToVisbility x:Key="ObjectComparatorToVisbility" />
+        <utils:GreaterThanOrEqualComparatorToBoolean x:Key="GreaterThanOrEqualComparatorToBoolean" />
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                        <Setter Property="Margin" Value="7" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.250" To="1" Storyboard.TargetProperty="Opacity" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:1" To="0.4" Storyboard.TargetProperty="Opacity" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <controls:WindowHeader x:Name="Header" HasUpdate="{Binding Status, Converter={StaticResource GreaterThanOrEqualComparatorToBoolean}, ConverterParameter={x:Static models:UpdateStatus.NewUpdate}}" OnClickUpdate="WindowHeader_OnClickUpdate" />
+        <StackPanel Grid.Row="1" Margin="32">
+            <CheckBox Content="Enable automatic theme changer" IsChecked="{Binding Enabled}" />
+            <StackPanel Margin="0 16 0 0" Visibility="{Binding Enabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid Margin="0 0 0 16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <Label Content="Change to light theme at" />
+                        <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding LightThemeTime}" Format="ShortTime" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <Label Content="Change to dark theme at" />
+                        <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding DarkThemeTime}" Format="ShortTime" />
+                    </StackPanel>
+                </Grid>
+                <Label Content="Let the app change Windows appearance" />
+                <ComboBox Margin="0 0 0 16" ItemsSource="{x:Static models:SettingsModel.ChangeTypeValues}"  DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding ChangeType}" />
+                <StackPanel Visibility="{Binding ChangeType, Converter={StaticResource ObjectComparatorToVisbility}, ConverterParameter={x:Static models:SettingsChangeType.Custom}}">
+                    <CheckBox Content="Change system theme" IsChecked="{Binding ChangeSystemTheme}" />
+                    <CheckBox Content="Change app theme" IsChecked="{Binding ChangeAppTheme}" />
+                    <CheckBox Content="Change wallpaper" IsChecked="{Binding ChangeWallpaper}" />
+                    <StackPanel Margin="0 16 0 0" Visibility="{Binding ChangeWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Label>
+                            <TextBlock>
+                                Light theme wallpaper (<Hyperlink Click="Hyperlink2_Click" Tag="LightWallpaperPath">Browse...</Hyperlink>)
+                            </TextBlock>
+                        </Label>
+                        <TextBox Margin="0 0 0 8" IsReadOnly="True" Text="{Binding LightWallpaperPath}" />
+                        <Label>
+                            <TextBlock>
+                                Dark theme wallpaper (<Hyperlink Click="Hyperlink2_Click" Tag="DarkWallpaperPath">Browse...</Hyperlink>)
+                            </TextBlock>
+                        </Label>
+                        <TextBox IsReadOnly="True" Text="{Binding DarkWallpaperPath}" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Visibility="{Binding ChangeType, Converter={StaticResource ObjectComparatorToVisbility}, ConverterParameter={x:Static models:SettingsChangeType.Theme}}">
+                    <Label>
+                        <TextBlock>
+                            Light .theme file (<Hyperlink Click="Hyperlink_Click" Tag="LightThemePath">Browse...</Hyperlink>)
+                        </TextBlock>
+                    </Label>
+                    <TextBox Margin="0 0 0 8" IsReadOnly="True" Text="{Binding LightThemePath}" />
+                    <Label>
+                        <TextBlock>
+                            Dark .theme file (<Hyperlink Click="Hyperlink_Click" Tag="DarkThemePath">Browse...</Hyperlink>)
+                        </TextBlock>
+                    </Label>
+                    <TextBox IsReadOnly="True" Text="{Binding DarkThemePath}" />
+                </StackPanel>
+                <Grid Margin="0 16 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Test light theme" Click="Button_Click" />
+                    <Button Content="Test dark theme" Click="Button_Click_1" Grid.Column="2" />
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
