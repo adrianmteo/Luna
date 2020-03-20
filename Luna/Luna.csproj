@@ -194,7 +194,7 @@
     <None Include="Resources\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\ThemeTool.exe">
+    <Content Include="ThemeTool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

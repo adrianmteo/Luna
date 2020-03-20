@@ -17,7 +17,7 @@ namespace Luna.Utils.Handlers
                 return;
             }
 
-            string themeToolPath = @"Resources\ThemeTool.exe";
+            string themeToolPath = @"ThemeTool.exe";
 
             if (!File.Exists(themeToolPath))
             {
