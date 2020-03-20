@@ -1,5 +1,7 @@
-﻿using Luna.Helpers;
-using Luna.Properties;
+﻿using Luna.Models;
+using Luna.Utils;
+using Luna.Utils.Handlers;
+using Luna.Utils.Logger;
 using System;
 using System.Windows;
 
@@ -7,28 +9,43 @@ namespace Luna
 {
     public partial class App : Application
     {
+        private static readonly ILogger Logger = AppLogger.GetLoggerForCurrentClass();
+
         [STAThread]
         public static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
             if (args.Length > 0)
             {
+                Logger.Info("Starting app with command line arguments: {0}", string.Join(", ", args));
+
+                AutoFileSaver<SettingsModel> autoFileSaver = new AutoFileSaver<SettingsModel>("settings.xml", true);
+                AppearanceHandler handler = new AppearanceHandler(autoFileSaver.Model);
+
                 foreach (string arg in args)
                 {
                     switch (arg)
                     {
                         case "/light":
-                            SwitchToLightTheme();
+                            handler.SwitchToLightTheme();
                             break;
 
                         case "/dark":
-                            SwitchToDarkTheme();
+                            handler.SwitchToDarkTheme();
+                            break;
+
+                        case "/update":
+                            AutoUpdater autoUpdater = new AutoUpdater(true, true);
+                            autoUpdater.CheckForUpdates(true).Wait();
                             break;
 
                         case "/clean":
-                            TaskHandler.DeleteTasks();
+                            TaskSchedulerHandler.DeleteAllTasks();
                             break;
 
                         default:
+                            Logger.Error("Command line argument is not accepted: {0}", arg);
                             break;
                     }
                 }
@@ -40,18 +57,13 @@ namespace Luna
                 app.Run();
             }
         }
-        public static void SwitchToLightTheme()
-        {
-            if (Settings.Default.ChangeAppTheme) RegistryHandler.AppsUseLightTheme(true);
-            if (Settings.Default.ChangeSystemTheme) RegistryHandler.SystemUsesLightTheme(true);
-            if (Settings.Default.ChangeWallpaper) WallpaperHandler.ChangeWallpaper(Settings.Default.LightWallpaperPath);
-        }
 
-        public static void SwitchToDarkTheme()
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (Settings.Default.ChangeAppTheme) RegistryHandler.AppsUseLightTheme(false);
-            if (Settings.Default.ChangeSystemTheme) RegistryHandler.SystemUsesLightTheme(false);
-            if (Settings.Default.ChangeWallpaper) WallpaperHandler.ChangeWallpaper(Settings.Default.DarkWallpaperPath);
+            if (e.ExceptionObject is Exception ex)
+            {
+                Logger.Exception(ex);
+            }
         }
     }
 }

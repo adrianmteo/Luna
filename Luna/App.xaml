@@ -1,53 +1,13 @@
 ﻿<Application x:Class="Luna.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Windows/SettingsWindow.xaml">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Metro/Dark/MetroDark.MSControls.Core.Implicit.xaml" />
-                <!-- Custom styles -->
-                <ResourceDictionary>
-                    <Style x:Key="CloseButtonStyle" TargetType="Button">
-                        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="BorderBrush" Value="{x:Null}" />
-                        <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="Padding" Value="0" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid>
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup x:Name="CommonStates">
-                                                <VisualState x:Name="Normal" />
-                                                <VisualState x:Name="MouseOver">
-                                                    <Storyboard>
-                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="Opacity">
-                                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.7" />
-                                                        </DoubleAnimationUsingKeyFrames>
-                                                    </Storyboard>
-                                                </VisualState>
-                                                <VisualState x:Name="Pressed">
-                                                    <Storyboard>
-                                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="Opacity">
-                                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="0.2" />
-                                                        </DoubleAnimationUsingKeyFrames>
-                                                    </Storyboard>
-                                                </VisualState>
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-                                        <Rectangle Fill="{TemplateBinding Background}" />
-                                        <ContentControl x:Name="ContentControl" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                            <ContentPresenter />
-                                        </ContentControl>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ResourceDictionary>
+                <ResourceDictionary Source="Theme/MetroDark.MSControls.Core.Implicit.xaml" />
+                <ResourceDictionary Source="Theme/Styles.Extended.Wpf.Toolkit.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
