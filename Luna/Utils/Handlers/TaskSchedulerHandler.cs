@@ -70,6 +70,8 @@ namespace Luna.Utils.Handlers
             catch (Exception ex)
             {
                 Logger.Error(ex.Message);
+
+                throw ex;
             }
         }
 
@@ -89,6 +91,8 @@ namespace Luna.Utils.Handlers
             catch (Exception ex)
             {
                 Logger.Error(ex.Message);
+
+                throw ex;
             }
         }
     }

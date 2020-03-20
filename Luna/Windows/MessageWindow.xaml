@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Luna.Windows"
         xmlns:controls="clr-namespace:Luna.Controls"
+        xmlns:utils="clr-namespace:Luna.Utils"
         mc:Ignorable="d"
         Title="Window" Width="350"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
@@ -18,6 +19,10 @@
     <Window.BorderBrush>
         <SolidColorBrush Color="{StaticResource Color_008}" />
     </Window.BorderBrush>
+
+    <Window.Resources>
+        <utils:ObjectEmptyToVisbility x:Key="ObjectEmptyToVisbility" />
+    </Window.Resources>
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
@@ -34,8 +39,8 @@
                 <TextBlock Text="{Binding Caption, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" TextWrapping="Wrap" />
             </Label>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="{Binding OK, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" Margin="0 0 8 0" Click="Button_Click_1" />
-                <Button Content="{Binding Cancel, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" Click="Button_Click" />
+                <Button Content="{Binding OK, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" Margin="0 0 8 0" Click="OKButton_Click" Visibility="{Binding OK, Converter={StaticResource ObjectEmptyToVisbility}, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" />
+                <Button Content="{Binding Cancel, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" Click="CancelButton_Click" Visibility="{Binding Cancel, Converter={StaticResource ObjectEmptyToVisbility}, RelativeSource={RelativeSource AncestorType={x:Type local:MessageWindow}}}" />
             </StackPanel>
         </StackPanel>
     </Grid>

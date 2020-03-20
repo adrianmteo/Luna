@@ -70,13 +70,20 @@ namespace Luna.Windows
 
             if (properties.Contains(e.PropertyName))
             {
-                if (!model.Enabled)
+                try
                 {
-                    TaskSchedulerHandler.DeleteAllTasks();
+                    if (!model.Enabled)
+                    {
+                        TaskSchedulerHandler.DeleteAllTasks();
+                    }
+                    else
+                    {
+                        TaskSchedulerHandler.UpdateAllTasks(model.LightThemeTime, model.DarkThemeTime);
+                    }
                 }
-                else
+                catch
                 {
-                    TaskSchedulerHandler.UpdateAllTasks(model.LightThemeTime, model.DarkThemeTime);
+                    new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", null, "Close").ShowDialog();
                 }
             }
         }
