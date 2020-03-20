@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Luna.Utils
 {
@@ -27,7 +28,7 @@ namespace Luna.Utils
 
         private readonly AutoFileSaver<UpdateModel> _autoSaver = new AutoFileSaver<UpdateModel>("update.xml");
 
-        private readonly JsonDownloader jsonDownloader = new JsonDownloader();
+        private readonly JsonDownloader _jsonDownloader = new JsonDownloader();
 
         public UpdateModel Model
         {
@@ -47,9 +48,12 @@ namespace Luna.Utils
 
         public bool AutoUpdate { get; set; }
 
-        public AutoUpdater(bool autoUpdate = false)
+        public bool NoStart { get; set; }
+
+        public AutoUpdater(bool autoUpdate = false, bool noStart = false)
         {
             AutoUpdate = autoUpdate;
+            NoStart = noStart;
 
             if (Model.Status == UpdateStatus.Checking || Model.Status == UpdateStatus.Downloading || Model.Status == UpdateStatus.Error)
             {
@@ -57,15 +61,17 @@ namespace Luna.Utils
             }
         }
 
-        public async void CheckForUpdates(bool force = true)
+        public async Task CheckForUpdates(bool force = true)
         {
             if (Model.Status == UpdateStatus.Checking)
             {
+                Logger.Warning("Cannot check for new updates because the status says it's already checking for one");
                 return;
             }
 
-            if (!force && Model.LastCheckInMinutes < 15)
+            if (!force && Model.LastCheckInMinutes < 30)
             {
+                Logger.Warning("Cannot check for new updates because the last check was less than 30m");
                 return;
             }
 
@@ -76,13 +82,13 @@ namespace Luna.Utils
 
             try
             {
-                GithubModel response = await jsonDownloader.GetObject<GithubModel>("https://api.github.com/repos/adrianmteo/Luna/releases/latest");
+                GithubModel response = await _jsonDownloader.GetObject<GithubModel>("https://api.github.com/repos/adrianmteo/Luna/releases/latest");
 
                 Version newVersion = new Version(response.tag_name.Substring(1));
 
                 if (newVersion > LocalVersion)
                 {
-                    Logger.Debug("Found new update with version {0}", newVersion);
+                    Logger.Info("Found new update with version {0}", newVersion);
 
                     GithubModel.Assets asset = response.assets.First(e => e.name.ToLower().Contains("exe"));
 
@@ -93,7 +99,7 @@ namespace Luna.Utils
 
                     if (AutoUpdate)
                     {
-                        DownloadUpdate();
+                        await DownloadUpdate();
                     }
                 }
                 else
@@ -111,10 +117,11 @@ namespace Luna.Utils
             }
         }
 
-        public async void DownloadUpdate()
+        public async Task DownloadUpdate()
         {
             if (Model.Status == UpdateStatus.Downloading)
             {
+                Logger.Warning("Cannot download update because the status says it's already downloading one");
                 return;
             }
 
@@ -125,9 +132,9 @@ namespace Luna.Utils
 
             try
             {
-                jsonDownloader.Client.DownloadProgressChanged += Client_DownloadProgressChanged;
+                _jsonDownloader.Client.DownloadProgressChanged += Client_DownloadProgressChanged;
 
-                Model.DownloadPath = await jsonDownloader.GetTempFile(Model.DownloadUrl, Model.DownloadName);
+                Model.DownloadPath = await _jsonDownloader.GetTempFile(Model.DownloadUrl, Model.DownloadName);
 
                 Model.Status = UpdateStatus.Ready;
 
@@ -144,7 +151,9 @@ namespace Luna.Utils
             }
             finally
             {
-                jsonDownloader.Client.DownloadProgressChanged -= Client_DownloadProgressChanged;
+                Logger.Info("Download update finished");
+
+                _jsonDownloader.Client.DownloadProgressChanged -= Client_DownloadProgressChanged;
             }
         }
 
@@ -159,12 +168,22 @@ namespace Luna.Utils
         {
             if (!File.Exists(Model.DownloadPath))
             {
+                Logger.Warning("Update file was not found at '{0}'", Model.DownloadPath);
                 return;
             }
 
+            Logger.Info("Staring update file at '{0}'", Model.DownloadPath);
+
             try
             {
-                Process.Start(Model.DownloadPath, "/VERYSILENT");
+                string arguments = "/VERYSILENT";
+
+                if (NoStart)
+                {
+                    arguments += " /NOSTART";
+                }
+
+                Process.Start(Model.DownloadPath, arguments);
 
                 Environment.Exit(0);
             }

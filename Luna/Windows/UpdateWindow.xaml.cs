@@ -17,18 +17,18 @@ namespace Luna.Windows
 
             if (autoUpdater.Model.Status == Models.UpdateStatus.None)
             {
-                autoUpdater.CheckForUpdates();
+                _ = autoUpdater.CheckForUpdates();
             }
         }
 
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
-            AutoUpdater.CheckForUpdates(true);
+            _ = AutoUpdater.CheckForUpdates(true);
         }
 
         private void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            AutoUpdater.DownloadUpdate();
+            _ = AutoUpdater.DownloadUpdate();
         }
 
         private void InstallButton_Click(object sender, RoutedEventArgs e)

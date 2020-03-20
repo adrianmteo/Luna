@@ -1,8 +1,11 @@
 ﻿using Luna.Models;
+using Luna.Properties;
 using Luna.Utils;
 using Luna.Utils.Handlers;
+using Luna.Utils.Logger;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -13,6 +16,8 @@ namespace Luna.Windows
 {
     public partial class SettingsWindow : Window
     {
+        private static readonly ILogger Logger = AppLogger.GetLoggerForCurrentClass();
+
         private readonly AutoFileSaver<SettingsModel> _autoFileSaver = new AutoFileSaver<SettingsModel>("settings.xml");
 
         private readonly AutoUpdater _autoUpdater = new AutoUpdater();
@@ -21,10 +26,59 @@ namespace Luna.Windows
         {
             InitializeComponent();
 
+            MigrateSettingsModel();
+
             DataContext = _autoFileSaver.Model;
             Header.DataContext = _autoUpdater.Model;
 
-            _autoUpdater.CheckForUpdates(false);
+            _ = _autoUpdater.CheckForUpdates(false);
+
+            _autoFileSaver.Model.PropertyChanged += Model_PropertyChanged;
+        }
+
+        private void MigrateSettingsModel()
+        {
+            if (!_autoFileSaver.FoundOnDisk)
+            {
+                Logger.Warning("Running settings migration...");
+
+                Settings.Default.Upgrade();
+                Settings.Default.Save();
+
+                Logger.Warning("Settings upgrade done");
+
+                _autoFileSaver.Model.Enabled = Settings.Default.Enabled;
+                _autoFileSaver.Model.ChangeSystemTheme = Settings.Default.ChangeSystemTheme;
+                _autoFileSaver.Model.ChangeAppTheme = Settings.Default.ChangeAppTheme;
+                _autoFileSaver.Model.ChangeWallpaper = Settings.Default.ChangeWallpaper;
+                _autoFileSaver.Model.LightWallpaperPath = Settings.Default.LightWallpaperPath;
+                _autoFileSaver.Model.DarkWallpaperPath = Settings.Default.DarkWallpaperPath;
+                _autoFileSaver.Model.ChangeType = SettingsChangeType.Custom;
+
+                _autoFileSaver.Model.LightThemeTime = new DateTime(1, 1, 1, Settings.Default.LightThemeHour, Settings.Default.LightThemeMinute, 0);
+                _autoFileSaver.Model.DarkThemeTime = new DateTime(1, 1, 1, Settings.Default.DarkThemeHour + 12, Settings.Default.DarkThemeMinute, 0);
+
+                Logger.Warning("Settings migration done");
+            }
+        }
+
+        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            SettingsModel model = (SettingsModel)sender;
+
+            List<string> properties = new List<string>() { "Enabled", "LightThemeTime", "DarkThemeTime" };
+
+            if (properties.Contains(e.PropertyName))
+            {
+                if (!model.Enabled)
+                {
+                    TaskSchedulerHandler.DeleteAllTasks();
+                }
+                else
+                {
+                    TaskSchedulerHandler.UpdateAllTasks(model.LightThemeTime, model.DarkThemeTime);
+                }
+            }
         }
 
         private void WindowHeader_OnClickUpdate(object sender, RoutedEventArgs e)
@@ -53,7 +107,7 @@ namespace Luna.Windows
                 switch (_autoUpdater.Model.Status)
                 {
                     case UpdateStatus.NewUpdate:
-                        _autoUpdater.DownloadUpdate();
+                        _ = _autoUpdater.DownloadUpdate();
                         break;
 
                     case UpdateStatus.Ready:
@@ -68,7 +122,7 @@ namespace Luna.Windows
             }
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        private void BrowseThemeHyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink hyperlink = (Hyperlink)sender;
 
@@ -88,7 +142,7 @@ namespace Luna.Windows
             }
         }
 
-        private void Hyperlink2_Click(object sender, RoutedEventArgs e)
+        private void BrowseWallpaperHyperlink_Click(object sender, RoutedEventArgs e)
         {
             Hyperlink hyperlink = (Hyperlink)sender;
 
@@ -107,13 +161,13 @@ namespace Luna.Windows
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void TextLightThemeButton_Click(object sender, RoutedEventArgs e)
         {
             AppearanceHandler handler = new AppearanceHandler(_autoFileSaver.Model);
             handler.SwitchToLightTheme();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void TestDarkThemeButton_Click(object sender, RoutedEventArgs e)
         {
             AppearanceHandler handler = new AppearanceHandler(_autoFileSaver.Model);
             handler.SwitchToDarkTheme();

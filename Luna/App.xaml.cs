@@ -36,13 +36,12 @@ namespace Luna
                             break;
 
                         case "/update":
-                            // TODO: wait then exit
-                            AutoUpdater autoUpdater = new AutoUpdater(true);
-                            autoUpdater.CheckForUpdates();
+                            AutoUpdater autoUpdater = new AutoUpdater(true, true);
+                            autoUpdater.CheckForUpdates(true).Wait();
                             break;
 
                         case "/clean":
-                            TaskHandler.DeleteTasks();
+                            TaskSchedulerHandler.DeleteAllTasks();
                             break;
 
                         default:

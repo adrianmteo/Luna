@@ -119,7 +119,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Utils\Handlers\RegistryHandler.cs" />
-    <Compile Include="Utils\Handlers\TaskHandler.cs" />
+    <Compile Include="Utils\Handlers\TaskSchedulerHandler.cs" />
     <Compile Include="Utils\Handlers\WallpaperHandler.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -199,4 +199,14 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>IF $(ConfigurationName) == Release (
+  "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "$(SolutionDir)\.extra\setup-script.iss"
+)</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>IF $(ConfigurationName) == Release (
+  RD /S /Q "$(TargetDir)"
+)</PreBuildEvent>
+  </PropertyGroup>
 </Project>

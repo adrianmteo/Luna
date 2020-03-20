@@ -1,6 +1,7 @@
 ﻿using Luna.Utils.Logger;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace Luna.Utils
@@ -12,6 +13,8 @@ namespace Luna.Utils
         public string Path { get; private set; }
 
         public bool ReadOnly { get; private set; }
+
+        public bool FoundOnDisk { get; private set; }
 
         private T _model;
 
@@ -43,6 +46,8 @@ namespace Luna.Utils
 
         public void ReloadFromDisk()
         {
+            FoundOnDisk = File.Exists(Path);
+
             try
             {
                 Logger.Debug("Reading XML for '{0}' from file '{1}'", typeof(T).Name, Path);

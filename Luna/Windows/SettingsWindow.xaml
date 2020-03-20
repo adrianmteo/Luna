@@ -70,11 +70,11 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel>
                         <Label Content="Change to light theme at" />
-                        <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding LightThemeTime}" Format="ShortTime" />
+                        <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding LightThemeTime, UpdateSourceTrigger=LostFocus}" Format="ShortTime" />
                     </StackPanel>
                     <StackPanel Grid.Column="2">
                         <Label Content="Change to dark theme at" />
-                        <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding DarkThemeTime}" Format="ShortTime" />
+                        <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding DarkThemeTime, UpdateSourceTrigger=LostFocus}" Format="ShortTime" />
                     </StackPanel>
                 </Grid>
                 <Label Content="Let the app change Windows appearance" />
@@ -86,13 +86,13 @@
                     <StackPanel Margin="0 16 0 0" Visibility="{Binding ChangeWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Label>
                             <TextBlock>
-                                Light theme wallpaper (<Hyperlink Click="Hyperlink2_Click" Tag="LightWallpaperPath">Browse...</Hyperlink>)
+                                Light theme wallpaper (<Hyperlink Click="BrowseWallpaperHyperlink_Click" Tag="LightWallpaperPath">Browse...</Hyperlink>)
                             </TextBlock>
                         </Label>
                         <TextBox Margin="0 0 0 8" IsReadOnly="True" Text="{Binding LightWallpaperPath}" />
                         <Label>
                             <TextBlock>
-                                Dark theme wallpaper (<Hyperlink Click="Hyperlink2_Click" Tag="DarkWallpaperPath">Browse...</Hyperlink>)
+                                Dark theme wallpaper (<Hyperlink Click="BrowseWallpaperHyperlink_Click" Tag="DarkWallpaperPath">Browse...</Hyperlink>)
                             </TextBlock>
                         </Label>
                         <TextBox IsReadOnly="True" Text="{Binding DarkWallpaperPath}" />
@@ -101,13 +101,13 @@
                 <StackPanel Visibility="{Binding ChangeType, Converter={StaticResource ObjectComparatorToVisbility}, ConverterParameter={x:Static models:SettingsChangeType.Theme}}">
                     <Label>
                         <TextBlock>
-                            Light .theme file (<Hyperlink Click="Hyperlink_Click" Tag="LightThemePath">Browse...</Hyperlink>)
+                            Light .theme file (<Hyperlink Click="BrowseThemeHyperlink_Click" Tag="LightThemePath">Browse...</Hyperlink>)
                         </TextBlock>
                     </Label>
                     <TextBox Margin="0 0 0 8" IsReadOnly="True" Text="{Binding LightThemePath}" />
                     <Label>
                         <TextBlock>
-                            Dark .theme file (<Hyperlink Click="Hyperlink_Click" Tag="DarkThemePath">Browse...</Hyperlink>)
+                            Dark .theme file (<Hyperlink Click="BrowseThemeHyperlink_Click" Tag="DarkThemePath">Browse...</Hyperlink>)
                         </TextBlock>
                     </Label>
                     <TextBox IsReadOnly="True" Text="{Binding DarkThemePath}" />
@@ -118,8 +118,8 @@
                         <ColumnDefinition Width="8" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Content="Test light theme" Click="Button_Click" />
-                    <Button Content="Test dark theme" Click="Button_Click_1" Grid.Column="2" />
+                    <Button Content="Test light theme" Click="TextLightThemeButton_Click" />
+                    <Button Content="Test dark theme" Click="TestDarkThemeButton_Click" Grid.Column="2" />
                 </Grid>
             </StackPanel>
         </StackPanel>
