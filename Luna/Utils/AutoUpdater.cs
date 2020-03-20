@@ -1,6 +1,7 @@
 ﻿using Luna.Models;
 using Luna.Utils.Logger;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -55,7 +56,9 @@ namespace Luna.Utils
             AutoUpdate = autoUpdate;
             NoStart = noStart;
 
-            if (Model.Status == UpdateStatus.Checking || Model.Status == UpdateStatus.Downloading || Model.Status == UpdateStatus.Error)
+            List<UpdateStatus> resetStatuses = new List<UpdateStatus>() { UpdateStatus.Checking, UpdateStatus.Downloading, UpdateStatus.Error };
+
+            if (resetStatuses.Contains(Model.Status))
             {
                 Model.Status = UpdateStatus.None;
             }
@@ -169,8 +172,13 @@ namespace Luna.Utils
             if (!File.Exists(Model.DownloadPath))
             {
                 Logger.Warning("Update file was not found at '{0}'", Model.DownloadPath);
+
+                Model.Status = UpdateStatus.Error;
+
                 return;
             }
+
+            _autoSaver.DeleteFromDisk();
 
             Logger.Info("Staring update file at '{0}'", Model.DownloadPath);
 

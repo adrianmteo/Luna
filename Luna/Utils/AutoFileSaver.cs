@@ -62,6 +62,18 @@ namespace Luna.Utils
             }
         }
 
+        public void DeleteFromDisk()
+        {
+            try
+            {
+                File.Delete(Path);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+            }
+        }
+
         private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (ReadOnly)

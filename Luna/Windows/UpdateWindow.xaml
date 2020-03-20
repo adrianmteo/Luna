@@ -27,11 +27,7 @@
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="NoUpdateTemplate">
-            <Label Padding="0">
-                <TextBlock>
-                    No new updates found. Last check was <Run Text="{Binding LastCheck}" />.
-                </TextBlock>
-            </Label>
+            <Label Padding="0" Content="No new updates found" />
         </DataTemplate>
         <DataTemplate x:Key="NewUpdateTemplate">
             <StackPanel>
@@ -66,7 +62,7 @@
         </DataTemplate>
         <DataTemplate x:Key="ErrorView">
             <StackPanel>
-                <Label Content="An error has occured. Check logs" />
+                <Label Content="An error has occured. Please check logs for more info." />
                 <Button Content="Try Again" HorizontalAlignment="Right" Click="CheckButton_Click" />
             </StackPanel>
         </DataTemplate>
