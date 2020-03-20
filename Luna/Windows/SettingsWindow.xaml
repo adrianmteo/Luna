@@ -8,7 +8,7 @@
         Title="Luna" Width="380"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" SizeToContent="Height"
         BorderThickness="1"
-        SnapsToDevicePixels="True" Closing="Window_Closing">
+        SnapsToDevicePixels="True">
 
     <Window.Background>
         <SolidColorBrush Color="{StaticResource Color_009}" />
@@ -21,7 +21,6 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <utils:ObjectComparatorToVisbility x:Key="ObjectComparatorToVisbility" />
-        <utils:GreaterThanOrEqualToBoolean x:Key="GreaterThanOrEqualToBoolean" />
 
         <Style x:Key="SunPathStyle" TargetType="Path">
             <Setter Property="Width" Value="16" />
@@ -74,7 +73,7 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:WindowHeader x:Name="Header" HasUpdate="{Binding Status, Converter={StaticResource GreaterThanOrEqualToBoolean}, ConverterParameter={x:Static models:UpdateStatus.NewUpdate}}" OnClickUpdate="WindowHeader_OnClickUpdate" />
+        <controls:WindowHeader ShowAbout="True" OnClickAbout="WindowHeader_OnClickAbout" />
         <StackPanel Grid.Row="1" Margin="24">
             <CheckBox Content="Enable automatic theme changer" IsChecked="{Binding Enabled}" />
             <StackPanel Margin="0 16 0 0" Visibility="{Binding Enabled, Converter={StaticResource BooleanToVisibilityConverter}}">

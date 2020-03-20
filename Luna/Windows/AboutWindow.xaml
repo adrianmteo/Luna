@@ -1,0 +1,61 @@
+﻿<Window x:Class="Luna.Windows.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:Luna.Controls"
+        mc:Ignorable="d"
+        Title="About" Width="270"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize" ShowInTaskbar="False"
+        BorderThickness="1"
+        SnapsToDevicePixels="True" SizeToContent="Height">
+
+    <Window.Background>
+        <SolidColorBrush Color="{StaticResource Color_009}" />
+    </Window.Background>
+
+    <Window.BorderBrush>
+        <SolidColorBrush Color="{StaticResource Color_008}" />
+    </Window.BorderBrush>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <controls:WindowHeader />
+        <StackPanel Grid.Row="1" Margin="24">
+            <Label Content="Luna" FontSize="24" Padding="0" />
+            <Label Padding="0 0 0 24">
+                <TextBlock>
+                    Version <Run Name="VersionText" />
+                </TextBlock>
+            </Label>
+            <Button Content="Check for updates" Click="ButtonCheck_Click" HorizontalAlignment="Left" />
+            <Label Padding="0 4 0 24">
+                <TextBlock TextWrapping="Wrap">
+                    Last check: <Run Name="LastCheckText" />
+                </TextBlock>
+            </Label>
+            <Label>
+                <TextBlock>
+                    <Hyperlink Click="Hyperlink_Click">Creator Github page</Hyperlink>
+                </TextBlock>
+            </Label>
+            <Label>
+                <TextBlock>
+                    <Hyperlink Click="Hyperlink1_Click">Github public repository</Hyperlink>
+                </TextBlock>
+            </Label>
+            <Label>
+                <TextBlock>
+                    <Hyperlink Click="Hyperlink2_Click">Suggestions and issues</Hyperlink>
+                </TextBlock>
+            </Label>
+        </StackPanel>
+    </Grid>
+</Window>

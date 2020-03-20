@@ -17,7 +17,7 @@ namespace Luna.Windows
 
             if (autoUpdater.Model.Status == Models.UpdateStatus.None)
             {
-                _ = autoUpdater.CheckForUpdates();
+                _ = autoUpdater.CheckForUpdates(true);
             }
         }
 

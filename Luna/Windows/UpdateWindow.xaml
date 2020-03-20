@@ -32,7 +32,7 @@
         <DataTemplate x:Key="NewUpdateTemplate">
             <StackPanel>
                 <Label Padding="0 0 0 16">
-                    <TextBlock>
+                    <TextBlock TextWrapping="Wrap">
                         Update to version <Run Text="{Binding Version}" /> is now available for download
                     </TextBlock>
                 </Label>
@@ -53,7 +53,7 @@
         <DataTemplate x:Key="ReadyTemplate">
             <StackPanel>
                 <Label Padding="0 0 0 16">
-                    <TextBlock>
+                    <TextBlock TextWrapping="Wrap">
                         Update to version <Run Text="{Binding Version}" /> is now ready to be installed
                     </TextBlock>
                 </Label>
@@ -62,7 +62,9 @@
         </DataTemplate>
         <DataTemplate x:Key="ErrorView">
             <StackPanel>
-                <Label Content="An error has occured. Please check logs for more info." />
+                <Label>
+                    <TextBlock Text="An error has occured. Please check logs for more info." TextWrapping="Wrap" />
+                </Label>
                 <Button Content="Try Again" HorizontalAlignment="Right" Click="CheckButton_Click" />
             </StackPanel>
         </DataTemplate>
