@@ -21,7 +21,7 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <utils:ObjectComparatorToVisbility x:Key="ObjectComparatorToVisbility" />
-        <utils:GreaterThanOrEqualComparatorToBoolean x:Key="GreaterThanOrEqualComparatorToBoolean" />
+        <utils:GreaterThanOrEqualToBoolean x:Key="GreaterThanOrEqualToBoolean" />
 
         <Style x:Key="SunPathStyle" TargetType="Path">
             <Setter Property="Width" Value="16" />
@@ -74,7 +74,7 @@
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:WindowHeader x:Name="Header" HasUpdate="{Binding Status, Converter={StaticResource GreaterThanOrEqualComparatorToBoolean}, ConverterParameter={x:Static models:UpdateStatus.NewUpdate}}" OnClickUpdate="WindowHeader_OnClickUpdate" />
+        <controls:WindowHeader x:Name="Header" HasUpdate="{Binding Status, Converter={StaticResource GreaterThanOrEqualToBoolean}, ConverterParameter={x:Static models:UpdateStatus.NewUpdate}}" OnClickUpdate="WindowHeader_OnClickUpdate" />
         <StackPanel Grid.Row="1" Margin="24">
             <CheckBox Content="Enable automatic theme changer" IsChecked="{Binding Enabled}" />
             <StackPanel Margin="0 16 0 0" Visibility="{Binding Enabled, Converter={StaticResource BooleanToVisibilityConverter}}">

@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Luna.Utils
 {
-    public class GreaterThanOrEqualComparatorToBoolean : IValueConverter
+    public class GreaterThanOrEqualToBoolean : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -28,6 +28,24 @@ namespace Luna.Utils
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value.Equals(parameter) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ObjectEmptyToVisbility : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string valueAsString)
+            {
+                return !string.IsNullOrEmpty(valueAsString) ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            return value != null ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
