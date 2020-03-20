@@ -1,16 +1,23 @@
 # Luna
 
-A super lightweight dark mode automatic switcher for Windows 10
+A super lightweight automatic theme changer for Windows 10
 
-**Features**
-
-- Set light/dark theme activation times
-- Toggle app/system theme based on activation times
-- Change wallpaper to light/dark activation times
-
-![](.repo/recording.gif)
+![](.repo/screenshot1.png)
+![](.repo/screenshot2.png)
 
 [![](.repo/download.png)](https://github.com/adrianmteo/Luna/releases/latest/download/LunaSetup.exe)
+
+## Features
+
+- 🎉 Change Window light/dark theme based on set times
+- 🎉 Change the Windows theme to a custom theme (see image below) and this includes changing:
+  - Background (image, slideshow or solid color)
+  - Colors
+  - Sounds
+  - Mouse cursor
+  - ![](.repo/theme.png)
+- 🎉 Change system or app color theme
+- 🎉 Change wallpaper for light/dark theme
 
 ## Install
 
@@ -27,8 +34,11 @@ I've built this app in my spare time to resolve my frustration with Windows 10 f
 This is a super lightweight app built using C# and WPF technologies. It creates task schedules for light/dark theme times. There are no running processes in the background and there is not need to start when Windows starts.
 
 3<sup>rd</sup> party libraries used:
+
 - [Infragistics Metro Light and Dark Theme for WPF](https://www.infragistics.com/community/blogs/b/blagunas/posts/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls)
 - [TaskScheduler](https://github.com/dahall/taskscheduler)
+- [Extended WPF Toolkit](https://github.com/xceedsoftware/wpftoolkit)
+- ThemeTool.exe - a Windows internal theme testing program used to change the Windows theme
 
 ## Command line parameters
 
@@ -36,7 +46,14 @@ This is a super lightweight app built using C# and WPF technologies. It creates 
 | --------- | ------------------------------------------------------- |
 | `/light`  | Switches to the light theme based on the saved settings |
 | `/dark`   | Switches to the dark theme based on the saved settings  |
+| `/update` | Silently checks for an update and installs it           |
 | `/clean`  | Cleans all task schedules created by the app            |
+
+## Build
+
+Clone and open the solution in Visual Studio. Right-click on the project and click `Restore NuGet Packages`.
+
+If you want to build the `Release` configuration and generate the setup executable (which is done automatically by building the `Release` configuration) you need to download and install [Inno Setup](https://jrsoftware.org/isinfo.php). The output setup executable can be found under `.extra\Output`.
 
 ## Future plans
 
