@@ -152,18 +152,18 @@
                         <ColumnDefinition Width="8" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Padding="0 8" Click="TextLightThemeButton_Click">
+                    <Button Padding="0 8" Click="StartLightThemeButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" Style="{StaticResource SunPathStyle}" />
-                            <Label Content="Test light theme" VerticalAlignment="Center" Margin="8 0 0 0" Padding="0 0 0 1"
+                            <Label Content="Start light theme" VerticalAlignment="Center" Margin="8 0 0 0" Padding="0 0 0 1"
                                    FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ContentControl}}"
                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
                         </StackPanel>
                     </Button>
-                    <Button Padding="0 8" Click="TestDarkThemeButton_Click" Grid.Column="2">
+                    <Button Padding="0 8" Click="StartDarkThemeButton_Click" Grid.Column="2">
                         <StackPanel Orientation="Horizontal">
                             <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" Style="{StaticResource MoonPathStyle}" />
-                            <Label Content="Test dark theme" VerticalAlignment="Center" Margin="8 0 0 0" Padding="0 0 0 1"
+                            <Label Content="Start dark theme" VerticalAlignment="Center" Margin="8 0 0 0" Padding="0 0 0 1"
                                    FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ContentControl}}"
                                    Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
                         </StackPanel>

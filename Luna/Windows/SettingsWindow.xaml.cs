@@ -168,13 +168,13 @@ namespace Luna.Windows
             }
         }
 
-        private void TextLightThemeButton_Click(object sender, RoutedEventArgs e)
+        private void StartLightThemeButton_Click(object sender, RoutedEventArgs e)
         {
             AppearanceHandler handler = new AppearanceHandler(_autoFileSaver.Model);
             handler.SwitchToLightTheme();
         }
 
-        private void TestDarkThemeButton_Click(object sender, RoutedEventArgs e)
+        private void StartDarkThemeButton_Click(object sender, RoutedEventArgs e)
         {
             AppearanceHandler handler = new AppearanceHandler(_autoFileSaver.Model);
             handler.SwitchToDarkTheme();
