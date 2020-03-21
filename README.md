@@ -8,7 +8,7 @@ A super lightweight automatic theme changer for Windows 10
 ![](.repo/screenshot3.png)
 ![](.repo/screenshot4.png)
 
-[![](.repo/download.png)](https://github.com/adrianmteo/Luna/releases/latest/download/LunaSetup.exe)
+[![](.repo/download.png)](https://github.com/adrianmteo/Luna/releases/latest)
 
 ## Features
 
@@ -24,7 +24,7 @@ A super lightweight automatic theme changer for Windows 10
 
 ## Install
 
-You can download and install the latest release from [here](https://github.com/adrianmteo/Luna/releases).
+You can download and install the latest release from [here](https://github.com/adrianmteo/Luna/releases/latest).
 
 **Note:** Windows SmartScreen might show you this warning screen. This is because the setup file is not being signed but the app is 100% safe to be run.
 
