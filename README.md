@@ -5,6 +5,9 @@ A super lightweight automatic theme changer for Windows 10
 ![](.repo/screenshot1.png)
 ![](.repo/screenshot2.png)
 
+![](.repo/screenshot3.png)
+![](.repo/screenshot4.png)
+
 [![](.repo/download.png)](https://github.com/adrianmteo/Luna/releases/latest/download/LunaSetup.exe)
 
 ## Features
@@ -15,7 +18,7 @@ A super lightweight automatic theme changer for Windows 10
   - Colors
   - Sounds
   - Mouse cursor
-  - ![](.repo/theme.png)
+  - ![](.repo/theme1.png) ![](.repo/theme2.png)
 - 🎉 Change system or app color theme
 - 🎉 Change wallpaper for light/dark theme
 

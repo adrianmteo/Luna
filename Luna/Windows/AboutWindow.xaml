@@ -5,18 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Luna.Controls"
         mc:Ignorable="d"
-        Title="About" Width="270"
-        WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize" ShowInTaskbar="False"
-        BorderThickness="1"
+        Title="About" Width="250" Background="{DynamicResource ButtonBackgroundBrush}"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
         SnapsToDevicePixels="True" SizeToContent="Height">
-
-    <Window.Background>
-        <SolidColorBrush Color="{StaticResource Color_009}" />
-    </Window.Background>
-
-    <Window.BorderBrush>
-        <SolidColorBrush Color="{StaticResource Color_008}" />
-    </Window.BorderBrush>
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
@@ -28,25 +19,25 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <controls:WindowHeader />
-        <StackPanel Grid.Row="1" Margin="24">
-            <Label Content="Luna" FontSize="24" Padding="0" />
-            <Label Padding="0 0 0 24">
+        <StackPanel Grid.Row="1" Margin="16">
+            <Label Content="Luna" FontSize="24" />
+            <Label Margin="0 0 0 24">
                 <TextBlock>
                     Version <Run Name="VersionText" />
                 </TextBlock>
             </Label>
             <Button Content="Check for updates" Click="ButtonCheck_Click" HorizontalAlignment="Left" />
-            <Label Padding="0 4 0 24">
+            <Label Margin="0 4 0 24">
                 <TextBlock TextWrapping="Wrap">
                     Last check: <Run Name="LastCheckText" />
                 </TextBlock>
             </Label>
-            <Label>
+            <Label Margin="0 0 0 4">
                 <TextBlock>
                     <Hyperlink Click="Hyperlink_Click">Creator Github page</Hyperlink>
                 </TextBlock>
             </Label>
-            <Label>
+            <Label Margin="0 0 0 4">
                 <TextBlock>
                     <Hyperlink Click="Hyperlink1_Click">Github public repository</Hyperlink>
                 </TextBlock>

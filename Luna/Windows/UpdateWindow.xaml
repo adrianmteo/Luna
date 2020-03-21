@@ -6,32 +6,23 @@
         xmlns:models="clr-namespace:Luna.Models"
         xmlns:controls="clr-namespace:Luna.Controls"
         mc:Ignorable="d"
-        Title="Update" Width="350"
+        Title="Update" Width="300" Background="{DynamicResource ButtonBackgroundBrush}"
         WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize" ShowInTaskbar="False"
-        BorderThickness="1"
         SnapsToDevicePixels="True" SizeToContent="Height">
 
-    <Window.Background>
-        <SolidColorBrush Color="{StaticResource Color_009}" />
-    </Window.Background>
-
-    <Window.BorderBrush>
-        <SolidColorBrush Color="{StaticResource Color_008}" />
-    </Window.BorderBrush>
-    
     <Window.Resources>
         <DataTemplate x:Key="CheckingTemplate">
             <StackPanel>
-                <Label Content="Checking for updates..." />
-                <ProgressBar IsIndeterminate="True" Height="7" />
+                <Label Content="Checking for updates..." Margin="0 0 0 4" />
+                <ProgressBar IsIndeterminate="True" Height="8" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="NoUpdateTemplate">
-            <Label Padding="0" Content="No new updates found" />
+            <Label Content="No new updates found" />
         </DataTemplate>
         <DataTemplate x:Key="NewUpdateTemplate">
             <StackPanel>
-                <Label Padding="0 0 0 16">
+                <Label Margin="0 0 0 16">
                     <TextBlock TextWrapping="Wrap">
                         Update to version <Run Text="{Binding Version}" /> is now available for download
                     </TextBlock>
@@ -41,18 +32,18 @@
         </DataTemplate>
         <DataTemplate x:Key="DownloadingTemplate">
             <StackPanel>
-                <Grid>
+                <Grid Margin="0 0 0 4">
                     <Label Content="Downloading update..." />
                     <Label HorizontalAlignment="Right">
                         <TextBlock Text="{Binding Progress, StringFormat={}{0:0}%}" />
                     </Label>
                 </Grid>
-                <ProgressBar Value="{Binding Progress}" Height="7" />
+                <ProgressBar Value="{Binding Progress}" Height="8" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:Key="ReadyTemplate">
             <StackPanel>
-                <Label Padding="0 0 0 16">
+                <Label Margin="0 0 0 16">
                     <TextBlock TextWrapping="Wrap">
                         Update to version <Run Text="{Binding Version}" /> is now ready to be installed
                     </TextBlock>
@@ -62,7 +53,7 @@
         </DataTemplate>
         <DataTemplate x:Key="ErrorView">
             <StackPanel>
-                <Label>
+                <Label Margin="0 0 0 16">
                     <TextBlock Text="An error has occured. Please check logs for more info." TextWrapping="Wrap" />
                 </Label>
                 <Button Content="Try Again" HorizontalAlignment="Right" Click="CheckButton_Click" />

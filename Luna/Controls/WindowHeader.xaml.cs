@@ -32,6 +32,12 @@ namespace Luna.Controls
             if (sender is DependencyObject dependencyObject)
             {
                 _window = Window.GetWindow(dependencyObject);
+
+                if (_window != null)
+                {
+                    ButtonMinimize.Visibility = !_window.ShowInTaskbar || _window.ResizeMode == ResizeMode.NoResize ? Visibility.Collapsed : Visibility.Visible;
+                    ButtonMaximize.Visibility = _window.ResizeMode == ResizeMode.CanMinimize || _window.ResizeMode == ResizeMode.NoResize ? Visibility.Collapsed : Visibility.Visible;
+                }
             }
         }
 

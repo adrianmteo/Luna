@@ -6,63 +6,24 @@
              xmlns:local="clr-namespace:Luna.Controls"
              mc:Ignorable="d" 
              d:DesignWidth="400" d:DesignHeight="48"
-             Loaded="WindowHeader_Loaded">
+             SnapsToDevicePixels="True" Loaded="WindowHeader_Loaded">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid Height="30" VerticalAlignment="Top">
-            <Label Margin="14 0 0 0" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}, FallbackValue=Window}" Padding="0" FontSize="14" VerticalAlignment="Center" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Focusable="False"
-                        Click="ButtonAbout_Click"
-                        Visibility="{Binding ShowAbout, RelativeSource={RelativeSource AncestorType={x:Type local:WindowHeader}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                        WindowChrome.IsHitTestVisibleInChrome="True" BorderThickness="0" Content="ABOUT" FontSize="13" Padding="12 0" />
-                <Button Width="48" Click="ButtonMinimize_Click" Focusable="False" BorderThickness="0" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ShowInTaskbar, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Rectangle Margin="0 9 0 0" Width="10" Height="1" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
-                </Button>
-                <Button Width="48" Click="ButtonMaximize_Click" Focusable="False" BorderThickness="0" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="CanMinimize">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ResizeMode, RelativeSource={RelativeSource AncestorType=Window}}" Value="NoResize">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                    <Rectangle Width="11" Height="11" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" StrokeThickness="1" />
-                </Button>
-                <Button Width="48" Click="ButtonClose_Click" Focusable="False" BorderThickness="0" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True">
+            <Label Margin="14 0 0 0" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}, FallbackValue=Window}" FontSize="14" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Focusable="False" WindowChrome.IsHitTestVisibleInChrome="True" BorderThickness="0" Content="ABOUT" FontSize="13" Padding="12 0" Click="ButtonAbout_Click"
+                        Visibility="{Binding ShowAbout, RelativeSource={RelativeSource AncestorType={x:Type local:WindowHeader}}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <Button Name="ButtonMinimize" Content="&#xE921;" FontFamily="/Luna;component/Resources/#Segoe MDL2 Assets" FontSize="10" Width="48" Click="ButtonMinimize_Click" Focusable="False" BorderThickness="0" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True" />
+                <Button Name="ButtonMaximize" Content="&#xE922;" FontFamily="/Luna;component/Resources/#Segoe MDL2 Assets" FontSize="10" Width="48" Click="ButtonMaximize_Click" Focusable="False" BorderThickness="0" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True" />
+                <Button Name="ButtonClose" Content="&#xE8BB;" FontFamily="/Luna;component/Resources/#Segoe MDL2 Assets" FontSize="10" Width="48" Click="ButtonClose_Click" Focusable="False" BorderThickness="0" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.Background>
-                        <SolidColorBrush Color="{StaticResource Color_028}" />
+                        <SolidColorBrush Color="{DynamicResource Color_028}" />
                     </Button.Background>
-                    <Grid>
-                        <Rectangle Width="15" Height="1" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" RenderTransformOrigin="0.5,0.5">
-                            <Rectangle.RenderTransform>
-                                <RotateTransform Angle="-45" />
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-                        <Rectangle Width="15" Height="1" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" RenderTransformOrigin="0.5,0.5">
-                            <Rectangle.RenderTransform>
-                                <RotateTransform Angle="45" />
-                            </Rectangle.RenderTransform>
-                        </Rectangle>
-                    </Grid>
                 </Button>
             </StackPanel>
         </Grid>

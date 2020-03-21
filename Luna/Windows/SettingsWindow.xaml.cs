@@ -94,9 +94,11 @@ namespace Luna.Windows
 
             if (e.PropertyName == "Status" && model.Status == UpdateStatus.NewUpdate)
             {
-                for (int i = 0; i < OwnedWindows.Count; i++)
+                WindowCollection windows = Application.Current.Windows;
+
+                for (int i = 0; i < windows.Count; i++)
                 {
-                    if (OwnedWindows[i] is UpdateWindow)
+                    if (windows[i] is UpdateWindow)
                     {
                         return;
                     }

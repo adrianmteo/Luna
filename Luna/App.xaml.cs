@@ -58,12 +58,29 @@ namespace Luna
             }
         }
 
+
+
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             if (e.ExceptionObject is Exception ex)
             {
                 Logger.Exception(ex);
             }
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            RegistryHandler.WatchAppTheme(theme =>
+            {
+                if (theme == WindowsTheme.Light)
+                {
+                    Resources.MergedDictionaries[0].Source = new Uri("Theme/Metro/Metro.MSControls.Core.Implicit.xaml", UriKind.Relative);
+                }
+                else
+                {
+                    Resources.MergedDictionaries[0].Source = new Uri("Theme/MetroDark/MetroDark.MSControls.Core.Implicit.xaml", UriKind.Relative);
+                }
+            });
         }
     }
 }

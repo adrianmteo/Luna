@@ -11,10 +11,6 @@ namespace Luna.Utils.Handlers
             Model = model;
         }
 
-        public AppearanceHandler()
-        {
-        }
-
         public void SwitchToLightTheme()
         {
             switch (Model.ChangeType)
