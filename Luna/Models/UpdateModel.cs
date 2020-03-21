@@ -20,7 +20,7 @@ namespace Luna.Models
     {
         private UpdateStatus _status = UpdateStatus.None;
 
-        [XmlAttribute("Status")]
+        [XmlIgnore]
         public UpdateStatus Status
         {
             get
@@ -52,7 +52,7 @@ namespace Luna.Models
 
         private string _version;
 
-        [XmlAttribute("Version")]
+        [XmlIgnore]
         public string Version
         {
             get
@@ -68,7 +68,7 @@ namespace Luna.Models
 
         private string _downloadUrl;
 
-        [XmlAttribute("DownloadUrl")]
+        [XmlIgnore]
         public string DownloadUrl
         {
             get
@@ -84,7 +84,7 @@ namespace Luna.Models
 
         private string _downloadPath;
 
-        [XmlAttribute("DownloadPath")]
+        [XmlIgnore]
         public string DownloadPath
         {
             get
@@ -100,7 +100,7 @@ namespace Luna.Models
 
         private string _downloadName;
 
-        [XmlAttribute("DownloadName")]
+        [XmlIgnore]
         public string DownloadName
         {
             get

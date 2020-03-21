@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Luna.Utils.Handlers
 {
-    public class TaskSchedulerHandler
+    public static class TaskSchedulerHandler
     {
         private static readonly ILogger Logger = AppLogger.GetLoggerForCurrentClass();
 

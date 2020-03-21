@@ -5,19 +5,19 @@ namespace Luna.Controls
 {
     public partial class WindowHeader : UserControl
     {
-        private static readonly DependencyProperty HasUpdateProperty = DependencyProperty.Register("HasUpdate", typeof(bool), typeof(WindowHeader), new PropertyMetadata(false));
-        public bool HasUpdate
+        private static readonly DependencyProperty ShowAboutProperty = DependencyProperty.Register("ShowAbout", typeof(bool), typeof(WindowHeader), new PropertyMetadata(false));
+        public bool ShowAbout
         {
-            get { return (bool)GetValue(HasUpdateProperty); }
-            set { SetValue(HasUpdateProperty, value); }
+            get { return (bool)GetValue(ShowAboutProperty); }
+            set { SetValue(ShowAboutProperty, value); }
         }
 
-        private static readonly RoutedEvent OnClickUpdateEvent = EventManager.RegisterRoutedEvent("OnClickUpdate", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WindowHeader));
+        private static readonly RoutedEvent OnClickAboutEvent = EventManager.RegisterRoutedEvent("OnClickAbout", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WindowHeader));
 
-        public event RoutedEventHandler OnClickUpdate
+        public event RoutedEventHandler OnClickAbout
         {
-            add { AddHandler(OnClickUpdateEvent, value); }
-            remove { RemoveHandler(OnClickUpdateEvent, value); }
+            add { AddHandler(OnClickAboutEvent, value); }
+            remove { RemoveHandler(OnClickAboutEvent, value); }
         }
 
         private Window _window;
@@ -32,6 +32,12 @@ namespace Luna.Controls
             if (sender is DependencyObject dependencyObject)
             {
                 _window = Window.GetWindow(dependencyObject);
+
+                if (_window != null)
+                {
+                    ButtonMinimize.Visibility = !_window.ShowInTaskbar || _window.ResizeMode == ResizeMode.NoResize ? Visibility.Collapsed : Visibility.Visible;
+                    ButtonMaximize.Visibility = _window.ResizeMode == ResizeMode.CanMinimize || _window.ResizeMode == ResizeMode.NoResize ? Visibility.Collapsed : Visibility.Visible;
+                }
             }
         }
 
@@ -59,9 +65,9 @@ namespace Luna.Controls
             }
         }
 
-        private void ButtonUpdate_Click(object sender, RoutedEventArgs e)
+        private void ButtonAbout_Click(object sender, RoutedEventArgs e)
         {
-            RaiseEvent(new RoutedEventArgs(OnClickUpdateEvent));
+            RaiseEvent(new RoutedEventArgs(OnClickAboutEvent));
         }
     }
 }

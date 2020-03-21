@@ -18,6 +18,8 @@ namespace Luna.Utils
 
         public async Task<T> GetObject<T>(string url)
         {
+            Client.Headers.Add("Content-Type", "application/json");
+
             string json = await Client.DownloadStringTaskAsync(url);
 
             return JsonConvert.DeserializeObject<T>(json);

@@ -4,64 +4,64 @@
 
     <Style x:Key="TimePickerStyle" TargetType="{x:Type toolkit:TimePicker}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}" />
         <Setter Property="FontSize" Value="14.667" />
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}" />
+        <Setter Property="Background" Value="{DynamicResource TextBoxBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="MinHeight" Value="30" />
         <Setter Property="Padding" Value="6,3" />
         <Setter Property="TextAlignment" Value="Left" />
-        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource TextBoxValidationToolTipTemplate}"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource TextBoxValidationToolTipTemplate}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type toolkit:TimePicker}">
                     <Grid x:Name="root">
                         <toolkit:ButtonSpinner x:Name="PART_Spinner"
-                                    IsTabStop="False"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}"
-                                    AllowSpin="{TemplateBinding AllowSpin}"
-                                    ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
-                                    Padding="0">
+                                               IsTabStop="False"
+                                               Background="{TemplateBinding Background}"
+                                               BorderBrush="{TemplateBinding BorderBrush}"
+                                               BorderThickness="{TemplateBinding BorderThickness}"
+                                               HorizontalContentAlignment="Stretch"
+                                               VerticalContentAlignment="Stretch"
+                                               ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}"
+                                               AllowSpin="{TemplateBinding AllowSpin}"
+                                               ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
+                                               Padding="0">
                             <toolkit:WatermarkTextBox x:Name="PART_TextBox"
-                                        BorderThickness="0"
-                                        Background="Transparent"
-                                        FontFamily="{TemplateBinding FontFamily}"
-                                        FontSize="{TemplateBinding FontSize}"
-                                        FontStretch="{TemplateBinding FontStretch}"
-                                        FontStyle="{TemplateBinding FontStyle}"
-                                        FontWeight="{TemplateBinding FontWeight}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        IsUndoEnabled="{Binding IsUndoEnabled, RelativeSource={RelativeSource TemplatedParent}}"
-                                        IsTabStop="True"
-                                        MinWidth="20"
-                                        AcceptsReturn="False"
-                                        Padding="{TemplateBinding Padding}"
-                                        TextAlignment="{TemplateBinding TextAlignment}"
-                                        TextWrapping="NoWrap"
-                                        Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
-                                        TabIndex="{TemplateBinding TabIndex}"
-                                        Watermark="{TemplateBinding Watermark}"
-                                        WatermarkTemplate="{TemplateBinding WatermarkTemplate}"
-                                        CaretBrush="{StaticResource ForegroundBrush}"
-                                        SelectionBrush="{StaticResource TextBoxFocusedBrush}" />
+                                                      BorderThickness="0"
+                                                      Background="Transparent"
+                                                      FontFamily="{TemplateBinding FontFamily}"
+                                                      FontSize="{TemplateBinding FontSize}"
+                                                      FontStretch="{TemplateBinding FontStretch}"
+                                                      FontStyle="{TemplateBinding FontStyle}"
+                                                      FontWeight="{TemplateBinding FontWeight}"
+                                                      Foreground="{TemplateBinding Foreground}"
+                                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      IsUndoEnabled="{Binding IsUndoEnabled, RelativeSource={RelativeSource TemplatedParent}}"
+                                                      IsTabStop="True"
+                                                      MinWidth="20"
+                                                      AcceptsReturn="False"
+                                                      Padding="{TemplateBinding Padding}"
+                                                      TextAlignment="{TemplateBinding TextAlignment}"
+                                                      TextWrapping="NoWrap"
+                                                      Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                                      TabIndex="{TemplateBinding TabIndex}"
+                                                      Watermark="{TemplateBinding Watermark}"
+                                                      WatermarkTemplate="{TemplateBinding WatermarkTemplate}"
+                                                      CaretBrush="{DynamicResource ForegroundBrush}"
+                                                      SelectionBrush="{DynamicResource TextBoxFocusedBrush}" />
                         </toolkit:ButtonSpinner>
                         <Border x:Name="FocusVisual"
-                                    Opacity="0"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    BorderBrush="{StaticResource TextBoxFocusedBrush}" />
+                                Opacity="0"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{DynamicResource TextBoxFocusedBrush}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource TextBoxHoverBorderBrush}" />
-                            <Setter Property="Background" Value="{StaticResource TextBoxHoverBackgroundBrush}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource TextBoxHoverBorderBrush}" />
+                            <Setter Property="Background" Value="{DynamicResource TextBoxHoverBackgroundBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
                             <Setter TargetName="FocusVisual" Property="Opacity" Value="1" />

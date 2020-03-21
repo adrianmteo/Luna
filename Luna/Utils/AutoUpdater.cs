@@ -1,7 +1,6 @@
 ﻿using Luna.Models;
 using Luna.Utils.Logger;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -29,8 +28,6 @@ namespace Luna.Utils
 
         private readonly AutoFileSaver<UpdateModel> _autoSaver = new AutoFileSaver<UpdateModel>("update.xml");
 
-        private readonly JsonDownloader _jsonDownloader = new JsonDownloader();
-
         public UpdateModel Model
         {
             get
@@ -55,16 +52,9 @@ namespace Luna.Utils
         {
             AutoUpdate = autoUpdate;
             NoStart = noStart;
-
-            List<UpdateStatus> resetStatuses = new List<UpdateStatus>() { UpdateStatus.Checking, UpdateStatus.Downloading, UpdateStatus.Error };
-
-            if (resetStatuses.Contains(Model.Status))
-            {
-                Model.Status = UpdateStatus.None;
-            }
         }
 
-        public async Task CheckForUpdates(bool force = true)
+        public async Task CheckForUpdates(bool force)
         {
             if (Model.Status == UpdateStatus.Checking)
             {
@@ -83,9 +73,11 @@ namespace Luna.Utils
             Model.LastCheck = DateTime.Now;
             Model.Status = UpdateStatus.Checking;
 
+            JsonDownloader jsonDownloader = new JsonDownloader();
+
             try
             {
-                GithubModel response = await _jsonDownloader.GetObject<GithubModel>("https://api.github.com/repos/adrianmteo/Luna/releases/latest");
+                GithubModel response = await jsonDownloader.GetObject<GithubModel>("https://api.github.com/repos/adrianmteo/Luna/releases/latest");
 
                 Version newVersion = new Version(response.tag_name.Substring(1));
 
@@ -98,11 +90,14 @@ namespace Luna.Utils
                     Model.Version = newVersion.ToString();
                     Model.DownloadUrl = asset.browser_download_url;
                     Model.DownloadName = asset.name;
-                    Model.Status = UpdateStatus.NewUpdate;
 
                     if (AutoUpdate)
                     {
                         await DownloadUpdate();
+                    }
+                    else
+                    {
+                        Model.Status = UpdateStatus.NewUpdate;
                     }
                 }
                 else
@@ -133,17 +128,21 @@ namespace Luna.Utils
             Model.Progress = 0;
             Model.Status = UpdateStatus.Downloading;
 
+            JsonDownloader jsonDownloader = new JsonDownloader();
+
             try
             {
-                _jsonDownloader.Client.DownloadProgressChanged += Client_DownloadProgressChanged;
+                jsonDownloader.Client.DownloadProgressChanged += Client_DownloadProgressChanged;
 
-                Model.DownloadPath = await _jsonDownloader.GetTempFile(Model.DownloadUrl, Model.DownloadName);
-
-                Model.Status = UpdateStatus.Ready;
+                Model.DownloadPath = await jsonDownloader.GetTempFile(Model.DownloadUrl, Model.DownloadName);
 
                 if (AutoUpdate)
                 {
                     InstallUpdate();
+                }
+                else
+                {
+                    Model.Status = UpdateStatus.Ready;
                 }
             }
             catch (Exception ex)
@@ -156,7 +155,7 @@ namespace Luna.Utils
             {
                 Logger.Info("Download update finished");
 
-                _jsonDownloader.Client.DownloadProgressChanged -= Client_DownloadProgressChanged;
+                jsonDownloader.Client.DownloadProgressChanged -= Client_DownloadProgressChanged;
             }
         }
 
@@ -177,8 +176,6 @@ namespace Luna.Utils
 
                 return;
             }
-
-            _autoSaver.DeleteFromDisk();
 
             Logger.Info("Staring update file at '{0}'", Model.DownloadPath);
 

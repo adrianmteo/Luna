@@ -26,14 +26,14 @@ namespace Luna.Windows
         {
             InitializeComponent();
 
-            MigrateSettingsModel();
+            _autoFileSaver.Model.PropertyChanged += SettingsModel_PropertyChanged;
+            _autoUpdater.Model.PropertyChanged += UpdateModel_PropertyChanged;
 
             DataContext = _autoFileSaver.Model;
-            Header.DataContext = _autoUpdater.Model;
 
             _ = _autoUpdater.CheckForUpdates(false);
 
-            _autoFileSaver.Model.PropertyChanged += Model_PropertyChanged;
+            MigrateSettingsModel();
         }
 
         private void MigrateSettingsModel()
@@ -62,7 +62,7 @@ namespace Luna.Windows
             }
         }
 
-        private void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void SettingsModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             SettingsModel model = (SettingsModel)sender;
 
@@ -88,44 +88,24 @@ namespace Luna.Windows
             }
         }
 
-        private void WindowHeader_OnClickUpdate(object sender, RoutedEventArgs e)
+        private void UpdateModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            OpenUpdateWindow();
-        }
+            UpdateModel model = (UpdateModel)sender;
 
-        private void OpenUpdateWindow()
-        {
-            UpdateWindow window = new UpdateWindow(_autoUpdater)
+            if (e.PropertyName == "Status" && model.Status == UpdateStatus.NewUpdate)
             {
-                Owner = this
-            };
+                WindowCollection windows = Application.Current.Windows;
 
-            window.ShowDialog();
-        }
-
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            if (_autoUpdater.Model.Status >= UpdateStatus.NewUpdate && new MessageWindow(this, "Update available", $"An update to version {_autoUpdater.Model.Version} is now available. Do you want to download and install it now?", "Update now").ShowDialog() == true)
-            {
-                e.Cancel = true;
-
-                _autoUpdater.AutoUpdate = true;
-
-                switch (_autoUpdater.Model.Status)
+                for (int i = 0; i < windows.Count; i++)
                 {
-                    case UpdateStatus.NewUpdate:
-                        _ = _autoUpdater.DownloadUpdate();
-                        break;
-
-                    case UpdateStatus.Ready:
-                        _autoUpdater.InstallUpdate();
-                        break;
-
-                    default:
-                        break;
+                    if (windows[i] is UpdateWindow)
+                    {
+                        return;
+                    }
                 }
 
-                OpenUpdateWindow();
+                UpdateWindow window = new UpdateWindow(_autoUpdater) { Owner = this };
+                window.ShowDialog();
             }
         }
 
@@ -168,16 +148,22 @@ namespace Luna.Windows
             }
         }
 
-        private void TextLightThemeButton_Click(object sender, RoutedEventArgs e)
+        private void StartLightThemeButton_Click(object sender, RoutedEventArgs e)
         {
             AppearanceHandler handler = new AppearanceHandler(_autoFileSaver.Model);
             handler.SwitchToLightTheme();
         }
 
-        private void TestDarkThemeButton_Click(object sender, RoutedEventArgs e)
+        private void StartDarkThemeButton_Click(object sender, RoutedEventArgs e)
         {
             AppearanceHandler handler = new AppearanceHandler(_autoFileSaver.Model);
             handler.SwitchToDarkTheme();
+        }
+
+        private void WindowHeader_OnClickAbout(object sender, RoutedEventArgs e)
+        {
+            Window window = new AboutWindow(_autoUpdater) { Owner = this };
+            window.ShowDialog();
         }
     }
 }

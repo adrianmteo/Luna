@@ -69,5 +69,15 @@ namespace Luna.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SegMDL2 {
+            get {
+                object obj = ResourceManager.GetObject("SegMDL2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

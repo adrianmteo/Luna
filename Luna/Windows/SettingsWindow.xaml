@@ -5,39 +5,13 @@
         xmlns:utils="clr-namespace:Luna.Utils"
         xmlns:models="clr-namespace:Luna.Models"
         xmlns:controls="clr-namespace:Luna.Controls"
-        Title="Luna" Width="380"
+        Title="Luna" Width="350" Background="{DynamicResource ButtonBackgroundBrush}"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" SizeToContent="Height"
-        BorderThickness="1"
-        SnapsToDevicePixels="True" Closing="Window_Closing">
-
-    <Window.Background>
-        <SolidColorBrush Color="{StaticResource Color_009}" />
-    </Window.Background>
-
-    <Window.BorderBrush>
-        <SolidColorBrush Color="{StaticResource Color_008}" />
-    </Window.BorderBrush>
+        SnapsToDevicePixels="True">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <utils:ObjectComparatorToVisbility x:Key="ObjectComparatorToVisbility" />
-        <utils:GreaterThanOrEqualToBoolean x:Key="GreaterThanOrEqualToBoolean" />
-
-        <Style x:Key="SunPathStyle" TargetType="Path">
-            <Setter Property="Width" Value="16" />
-            <Setter Property="Height" Value="16" />
-            <Setter Property="Stretch" Value="Fill" />
-            <Setter Property="Fill" Value="{StaticResource ForegroundBrush}" />
-            <Setter Property="Data" Value="M25,50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0" />
-        </Style>
-
-        <Style x:Key="MoonPathStyle" TargetType="Path">
-            <Setter Property="Width" Value="15" />
-            <Setter Property="Height" Value="16" />
-            <Setter Property="Stretch" Value="Fill" />
-            <Setter Property="Fill" Value="{StaticResource ForegroundBrush}" />
-            <Setter Property="Data" Value="M459.782,347.328c-4.288-5.28-11.488-7.232-17.824-4.96c-17.76,6.368-37.024,9.632-57.312,9.632c-97.056,0-176-78.976-176-176c0-58.4,28.832-112.768,77.12-145.472c5.472-3.712,8.096-10.4,6.624-16.832S285.638,2.4,279.078,1.44C271.59,0.352,264.134,0,256.646,0c-132.352,0-240,107.648-240,240s107.648,240,240,240c84,0,160.416-42.688,204.352-114.176C464.55,360.032,464.038,352.64,459.782,347.328z" />
-        </Style>
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
@@ -45,37 +19,12 @@
     </WindowChrome.WindowChrome>
 
     <Grid>
-        <Grid.Style>
-            <Style TargetType="Grid">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
-                        <Setter Property="Margin" Value="7" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                        <DataTrigger.EnterActions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Duration="0:0:0.250" To="1" Storyboard.TargetProperty="Opacity" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </DataTrigger.EnterActions>
-                        <DataTrigger.ExitActions>
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Duration="0:0:1" To="0.4" Storyboard.TargetProperty="Opacity" />
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </DataTrigger.ExitActions>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:WindowHeader x:Name="Header" HasUpdate="{Binding Status, Converter={StaticResource GreaterThanOrEqualToBoolean}, ConverterParameter={x:Static models:UpdateStatus.NewUpdate}}" OnClickUpdate="WindowHeader_OnClickUpdate" />
-        <StackPanel Grid.Row="1" Margin="24">
+        <controls:WindowHeader ShowAbout="True" OnClickAbout="WindowHeader_OnClickAbout" />
+        <StackPanel Grid.Row="1" Margin="16">
             <CheckBox Content="Enable automatic theme changer" IsChecked="{Binding Enabled}" />
             <StackPanel Margin="0 16 0 0" Visibility="{Binding Enabled, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid Margin="0 0 0 16">
@@ -85,91 +34,84 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
-                            <Path Style="{StaticResource SunPathStyle}" />
-                            <Label Content="Light theme time" Margin="6 0 0 0" Padding="0 0 0 1" VerticalAlignment="Center" />
-                        </StackPanel>
+                        <Label Content="Light theme time" Margin="0 0 0 4" />
                         <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding LightThemeTime, UpdateSourceTrigger=LostFocus}" Format="ShortTime" />
                     </StackPanel>
                     <StackPanel Grid.Column="2">
-                        <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
-                            <Path Style="{StaticResource MoonPathStyle}" />
-                            <Label Content="Dark theme time" Margin="6 0 0 0" Padding="0 0 0 1" VerticalAlignment="Center" />
-                        </StackPanel>
+                        <Label Content="Dark theme time" Margin="0 0 0 4" />
                         <toolkit:TimePicker ShowButtonSpinner="False" ShowDropDownButton="False" Value="{Binding DarkThemeTime, UpdateSourceTrigger=LostFocus}" Format="ShortTime" />
                     </StackPanel>
                 </Grid>
-                <Label Content="Let the app change Windows appearance" />
-                <ComboBox Margin="0 0 0 16" ItemsSource="{x:Static models:SettingsModel.ChangeTypeValues}"  DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding ChangeType}" />
-                <StackPanel Visibility="{Binding ChangeType, Converter={StaticResource ObjectComparatorToVisbility}, ConverterParameter={x:Static models:SettingsChangeType.Custom}}">
+                <Label Content="Let the app change Windows appearance" Margin="0 0 0 4" />
+                <ComboBox Margin="0 0 0 16" ItemsSource="{x:Static models:SettingsModel.ChangeTypeValues}" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding ChangeType}" />
+                <StackPanel Margin="0 0 0 16" Visibility="{Binding ChangeType, Converter={StaticResource ObjectComparatorToVisbility}, ConverterParameter={x:Static models:SettingsChangeType.Custom}}">
                     <CheckBox Content="Change system theme" IsChecked="{Binding ChangeSystemTheme}" />
                     <CheckBox Content="Change app theme" IsChecked="{Binding ChangeAppTheme}" />
                     <CheckBox Content="Change wallpaper" IsChecked="{Binding ChangeWallpaper}" />
                     <StackPanel Margin="0 8 0 0" Visibility="{Binding ChangeWallpaper, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
-                            <Path Style="{StaticResource SunPathStyle}" />
-                            <Label Margin="6 0 0 0" Padding="0 0 0 1" VerticalAlignment="Center">
-                                <TextBlock>
-                                    Light theme wallpaper (<Hyperlink Click="BrowseWallpaperHyperlink_Click" Tag="LightWallpaperPath">Browse...</Hyperlink>)
-                                </TextBlock>
-                            </Label>
-                        </StackPanel>
+                        <Label Margin="0 0 0 4">
+                            <TextBlock>
+                                Light theme wallpaper (<Hyperlink Click="BrowseWallpaperHyperlink_Click" Tag="LightWallpaperPath">Browse...</Hyperlink>)
+                            </TextBlock>
+                        </Label>
                         <TextBox Margin="0 0 0 8" IsReadOnly="True" Text="{Binding LightWallpaperPath}" />
-                        <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
-                            <Path Style="{StaticResource MoonPathStyle}" />
-                            <Label Margin="6 0 0 0" Padding="0 0 0 1" VerticalAlignment="Center">
-                                <TextBlock>
-                                    Dark theme wallpaper (<Hyperlink Click="BrowseWallpaperHyperlink_Click" Tag="DarkWallpaperPath">Browse...</Hyperlink>)
-                                </TextBlock>
-                            </Label>
-                        </StackPanel>
+                        <Label Margin="0 0 0 4">
+                            <TextBlock>
+                                Dark theme wallpaper (<Hyperlink Click="BrowseWallpaperHyperlink_Click" Tag="DarkWallpaperPath">Browse...</Hyperlink>)
+                            </TextBlock>
+                        </Label>
                         <TextBox IsReadOnly="True" Text="{Binding DarkWallpaperPath}" />
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Visibility="{Binding ChangeType, Converter={StaticResource ObjectComparatorToVisbility}, ConverterParameter={x:Static models:SettingsChangeType.Theme}}">
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
-                        <Path Style="{StaticResource SunPathStyle}" />
-                        <Label Margin="6 0 0 0" Padding="0 0 0 1" VerticalAlignment="Center">
-                            <TextBlock>
-                                Light .theme file (<Hyperlink Click="BrowseThemeHyperlink_Click" Tag="LightThemePath">Browse...</Hyperlink>)
-                            </TextBlock>
-                        </Label>
-                    </StackPanel>
+                <StackPanel Margin="0 0 0 16" Visibility="{Binding ChangeType, Converter={StaticResource ObjectComparatorToVisbility}, ConverterParameter={x:Static models:SettingsChangeType.Theme}}">
+                    <Label Margin="0 0 0 4">
+                        <TextBlock>
+                            Light .theme file (<Hyperlink Click="BrowseThemeHyperlink_Click" Tag="LightThemePath">Browse...</Hyperlink>)
+                        </TextBlock>
+                    </Label>
                     <TextBox Margin="0 0 0 8" IsReadOnly="True" Text="{Binding LightThemePath}" />
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 6">
-                        <Path Style="{StaticResource MoonPathStyle}" />
-                        <Label Margin="6 0 0 0" Padding="0 0 0 1" VerticalAlignment="Center">
-                            <TextBlock>
-                                Dark .theme file (<Hyperlink Click="BrowseThemeHyperlink_Click" Tag="DarkThemePath">Browse...</Hyperlink>)
-                            </TextBlock>
-                        </Label>
-                    </StackPanel>
+                    <Label Margin="0 0 0 4">
+                        <TextBlock>
+                            Dark .theme file (<Hyperlink Click="BrowseThemeHyperlink_Click" Tag="DarkThemePath">Browse...</Hyperlink>)
+                        </TextBlock>
+                    </Label>
                     <TextBox IsReadOnly="True" Text="{Binding DarkThemePath}" />
                 </StackPanel>
-                <Grid Margin="0 16 0 0">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="8" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button Padding="0 8" Click="TextLightThemeButton_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" Style="{StaticResource SunPathStyle}" />
-                            <Label Content="Test light theme" VerticalAlignment="Center" Margin="8 0 0 0" Padding="0 0 0 1"
-                                   FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ContentControl}}"
-                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
-                        </StackPanel>
-                    </Button>
-                    <Button Padding="0 8" Click="TestDarkThemeButton_Click" Grid.Column="2">
-                        <StackPanel Orientation="Horizontal">
-                            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" Style="{StaticResource MoonPathStyle}" />
-                            <Label Content="Test dark theme" VerticalAlignment="Center" Margin="8 0 0 0" Padding="0 0 0 1"
-                                   FontSize="{Binding FontSize, RelativeSource={RelativeSource AncestorType=ContentControl}}"
-                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ContentControl}}" />
-                        </StackPanel>
-                    </Button>
+                    <Button Content="Start light theme" Click="StartLightThemeButton_Click" />
+                    <Button Content="Start dark theme" Click="StartDarkThemeButton_Click" Grid.Column="2" />
                 </Grid>
             </StackPanel>
         </StackPanel>
+        <Rectangle Fill="Black" Grid.RowSpan="2" IsHitTestVisible="False">
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Opacity" Value="0" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.250" To="0" Storyboard.TargetProperty="Opacity" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:1" To="0.6" Storyboard.TargetProperty="Opacity" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
     </Grid>
 </Window>
