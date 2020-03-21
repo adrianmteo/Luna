@@ -5,15 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Luna.Controls"
         mc:Ignorable="d"
-        Title="About" Width="250" Background="{DynamicResource ButtonBackgroundBrush}"
+        Title="About" Width="280" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
         SnapsToDevicePixels="True" SizeToContent="Height">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+        <WindowChrome CaptionHeight="45" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <Grid>
+    <Grid Margin="15" Background="{DynamicResource ButtonBackgroundBrush}">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="15" Color="Black" Opacity="0.4" ShadowDepth="0" />
+        </Grid.Effect>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition />

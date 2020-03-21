@@ -24,7 +24,7 @@ DefaultDirName={localappdata}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
-OutputBaseFilename={#MyAppName}Setup
+OutputBaseFilename={#MyAppName}_Setup_{#MyAppVersion}
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
