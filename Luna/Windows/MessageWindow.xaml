@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:Luna.Controls"
         xmlns:utils="clr-namespace:Luna.Utils"
         mc:Ignorable="d"
-        Title="Window" Width="350" Background="{DynamicResource ButtonBackgroundBrush}"
+        Title="Window" Width="380" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False"
         SnapsToDevicePixels="True" SizeToContent="Height">
 
@@ -16,10 +16,13 @@
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+        <WindowChrome CaptionHeight="45" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <Grid>
+    <Grid Margin="15" Background="{DynamicResource ButtonBackgroundBrush}">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="15" Color="Black" Opacity="0.4" ShadowDepth="0" />
+        </Grid.Effect>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition />

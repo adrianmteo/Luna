@@ -5,7 +5,7 @@
         xmlns:utils="clr-namespace:Luna.Utils"
         xmlns:models="clr-namespace:Luna.Models"
         xmlns:controls="clr-namespace:Luna.Controls"
-        Title="Luna" Width="350" Background="{DynamicResource ButtonBackgroundBrush}"
+        Title="Luna" Width="380" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" SizeToContent="Height"
         SnapsToDevicePixels="True">
 
@@ -15,10 +15,13 @@
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+        <WindowChrome CaptionHeight="45" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <Grid>
+    <Grid Margin="15" Background="{DynamicResource ButtonBackgroundBrush}">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="15" Color="Black" Opacity="0.4" ShadowDepth="0" />
+        </Grid.Effect>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
@@ -88,30 +91,5 @@
                 </Grid>
             </StackPanel>
         </StackPanel>
-        <Rectangle Fill="Black" Grid.RowSpan="2" IsHitTestVisible="False">
-            <Rectangle.Style>
-                <Style TargetType="Rectangle">
-                    <Setter Property="Opacity" Value="0" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.250" To="0" Storyboard.TargetProperty="Opacity" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:1" To="0.6" Storyboard.TargetProperty="Opacity" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Rectangle.Style>
-        </Rectangle>
     </Grid>
 </Window>

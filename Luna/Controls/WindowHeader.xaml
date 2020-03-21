@@ -12,6 +12,16 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
 
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
     <Grid>
         <Grid Height="30" VerticalAlignment="Top">
             <Label Margin="14 0 0 0" Content="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}, FallbackValue=Window}" FontSize="14" VerticalAlignment="Center" />

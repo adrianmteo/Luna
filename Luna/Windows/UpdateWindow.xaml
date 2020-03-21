@@ -6,7 +6,7 @@
         xmlns:models="clr-namespace:Luna.Models"
         xmlns:controls="clr-namespace:Luna.Controls"
         mc:Ignorable="d"
-        Title="Update" Width="300" Background="{DynamicResource ButtonBackgroundBrush}"
+        Title="Update" Width="320" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}"
         WindowStartupLocation="CenterOwner" ResizeMode="CanMinimize" ShowInTaskbar="False"
         SnapsToDevicePixels="True" SizeToContent="Height">
 
@@ -62,10 +62,13 @@
     </Window.Resources>
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
+        <WindowChrome CaptionHeight="45" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
 
-    <Grid>
+    <Grid Margin="15" Background="{DynamicResource ButtonBackgroundBrush}">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="15" Color="Black" Opacity="0.4" ShadowDepth="0" />
+        </Grid.Effect>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition />
