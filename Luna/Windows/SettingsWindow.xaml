@@ -5,23 +5,20 @@
         xmlns:utils="clr-namespace:Luna.Utils"
         xmlns:models="clr-namespace:Luna.Models"
         xmlns:controls="clr-namespace:Luna.Controls"
-        Title="Luna" Width="380" WindowStyle="None" AllowsTransparency="True" Background="{x:Null}"
+        Title="Luna" Width="350" Background="{DynamicResource ButtonBackgroundBrush}"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" SizeToContent="Height"
         SnapsToDevicePixels="True">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30" ResizeBorderThickness="4" CornerRadius="0" GlassFrameThickness="-1" />
+    </WindowChrome.WindowChrome>
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <utils:ObjectComparatorToVisbility x:Key="ObjectComparatorToVisbility" />
     </Window.Resources>
 
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="45" ResizeBorderThickness="4" CornerRadius="0" NonClientFrameEdges="None" GlassFrameThickness="0" />
-    </WindowChrome.WindowChrome>
-
-    <Grid Margin="15" Background="{DynamicResource ButtonBackgroundBrush}">
-        <Grid.Effect>
-            <DropShadowEffect BlurRadius="15" Color="Black" Opacity="0.4" ShadowDepth="0" />
-        </Grid.Effect>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
