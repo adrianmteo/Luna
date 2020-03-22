@@ -66,6 +66,22 @@ namespace Luna.Models
             }
         }
 
+        private string _changelog;
+
+        [XmlIgnore]
+        public string Changelog
+        {
+            get
+            {
+                return _changelog;
+            }
+            set
+            {
+                _changelog = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private string _downloadUrl;
 
         [XmlIgnore]
