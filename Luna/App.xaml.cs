@@ -35,6 +35,23 @@ namespace Luna
                             handler.SwitchToDarkTheme();
                             break;
 
+                        case "/change":
+                            DateTime now = DateTime.Now;
+
+                            DateTime t1 = DateTime.Today.AddHours(autoFileSaver.Model.LightThemeTime.Hour).AddMinutes(autoFileSaver.Model.LightThemeTime.Minute);
+                            DateTime t2 = DateTime.Today.AddHours(autoFileSaver.Model.DarkThemeTime.Hour).AddMinutes(autoFileSaver.Model.DarkThemeTime.Minute);
+
+                            if (now > t1 && now < t2)
+                            {
+                                handler.SwitchToLightTheme();
+                            }
+                            else
+                            {
+                                handler.SwitchToDarkTheme();
+                            }
+
+                            break;
+
                         case "/update":
                             AutoUpdater autoUpdater = new AutoUpdater(true, true);
                             autoUpdater.CheckForUpdates(true).Wait();
@@ -57,8 +74,6 @@ namespace Luna
                 app.Run();
             }
         }
-
-
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {

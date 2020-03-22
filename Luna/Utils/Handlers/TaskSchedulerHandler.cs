@@ -50,7 +50,36 @@ namespace Luna.Utils.Handlers
             task.Triggers.Add(new DailyTrigger { StartBoundary = start, DaysInterval = days });
             task.Actions.Add(new ExecAction(path, args, cwd));
             task.Settings.DisallowStartIfOnBatteries = false;
-            task.Settings.StartWhenAvailable = true;
+            // task.Settings.StartWhenAvailable = true;
+
+            return folder.RegisterTaskDefinition(name, task);
+        }
+
+        private static Task CreateWakeUpTask(string name, TaskFolder folder, string path, string args)
+        {
+            Logger.Info("Creating task scheduler daily task '{0}' for app at '{1}' and with args '{2}'", name, path, args);
+
+            Task foundTask = folder.Tasks.FirstOrDefault(e => e.Path == name);
+
+            if (foundTask != null)
+            {
+                folder.DeleteTask(foundTask.Name);
+            }
+
+            string cwd = Path.GetDirectoryName(path);
+
+            TaskDefinition task = Service.NewTask();
+
+            task.Triggers.Add(new EventTrigger()
+            {
+                Subscription = "<QueryList><Query Id='0' Path='System'><Select Path='System'>*[System[Provider[@Name='Microsoft-Windows-Power-Troubleshooter'] and (Level=4 or Level=0) and (EventID=1)]]</Select></Query></QueryList>"
+            });
+
+            task.Triggers.Add(new BootTrigger());
+
+            task.Actions.Add(new ExecAction(path, args, cwd));
+            task.Settings.DisallowStartIfOnBatteries = false;
+            // task.Settings.StartWhenAvailable = true;
 
             return folder.RegisterTaskDefinition(name, task);
         }
@@ -59,17 +88,17 @@ namespace Luna.Utils.Handlers
         {
             string path = Assembly.GetExecutingAssembly().Location;
 
-            DateTime now = DateTime.Now;
-            DateTime lightTime = new DateTime(now.Year, now.Month, now.Day, lightThemeTime.Hour, lightThemeTime.Minute, 0);
-            DateTime darkTime = new DateTime(now.Year, now.Month, now.Day, darkThemeTime.Hour, darkThemeTime.Minute, 0);
+            DateTime lightTime = DateTime.Today.AddHours(lightThemeTime.Hour).AddMinutes(lightThemeTime.Minute);
+            DateTime darkTime = DateTime.Today.AddHours(darkThemeTime.Hour).AddMinutes(darkThemeTime.Minute);
 
             try
             {
                 TaskFolder folder = CreateRootFolder();
 
-                CreateDailyTask("Light theme", folder, lightTime, path, "/light");
-                CreateDailyTask("Dark theme", folder, darkTime, path, "/dark");
-                CreateDailyTask("Auto update", folder, lightTime, path, "/update", 7);
+                CreateDailyTask("Light theme", folder, lightTime, path, "/change");
+                CreateDailyTask("Dark theme", folder, darkTime, path, "/change");
+                CreateWakeUpTask("Change theme", folder, path, "/change");
+                CreateDailyTask("Auto update", folder, lightTime, path, "/update", 3);
             }
             catch (Exception ex)
             {

@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -85,7 +86,13 @@ namespace Luna.Windows
                 }
                 catch
                 {
-                    new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", null, "Close").ShowDialog();
+                    if (new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", "Run as administrator", "Close").ShowDialog() == true)
+                    {
+                        Process process = new Process();
+                        process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
+                        process.StartInfo.Verb = "runas";
+                        process.Start();
+                    }
                 }
                 finally
                 {
