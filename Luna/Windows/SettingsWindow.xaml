@@ -24,7 +24,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <controls:WindowHeader ShowAbout="True" OnClickAbout="WindowHeader_OnClickAbout" />
-        <StackPanel Grid.Row="1" Margin="16">
+        <StackPanel Name="Content" Grid.Row="1" Margin="16">
             <CheckBox Content="Enable automatic theme changer" IsChecked="{Binding Enabled}" />
             <StackPanel Margin="0 16 0 0" Visibility="{Binding Enabled, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Grid Margin="0 0 0 16">

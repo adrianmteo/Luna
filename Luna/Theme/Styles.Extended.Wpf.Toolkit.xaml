@@ -12,7 +12,7 @@
         <Setter Property="MinHeight" Value="30" />
         <Setter Property="Padding" Value="6,3" />
         <Setter Property="TextAlignment" Value="Left" />
-        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource TextBoxValidationToolTipTemplate}"/>
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource TextBoxValidationToolTipTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type toolkit:TimePicker}">
@@ -57,6 +57,7 @@
                                 Opacity="0"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{DynamicResource TextBoxFocusedBrush}" />
+                        <Rectangle x:Name="Disabled" Fill="{DynamicResource ComboBoxDisabledBackgroundBrush}" Visibility="Collapsed" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -65,6 +66,13 @@
                         </Trigger>
                         <Trigger SourceName="PART_TextBox" Property="IsFocused" Value="True">
                             <Setter TargetName="FocusVisual" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Disabled" Property="Visibility">
+                                <Setter.Value>
+                                    <Visibility>Visible</Visibility>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
