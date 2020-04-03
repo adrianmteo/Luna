@@ -70,6 +70,8 @@ namespace Luna.Windows
 
             if (properties.Contains(e.PropertyName))
             {
+                Content.IsEnabled = false;
+
                 try
                 {
                     if (!model.Enabled)
@@ -84,6 +86,10 @@ namespace Luna.Windows
                 catch
                 {
                     new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", null, "Close").ShowDialog();
+                }
+                finally
+                {
+                    Content.IsEnabled = true;
                 }
             }
         }

@@ -13,7 +13,11 @@ namespace Luna.Utils.Handlers
 
         private static readonly TaskService Service = new TaskService();
 
+        #if DEBUG
+        private static readonly string RootFolderName = "LunaDebug";
+        #else
         private static readonly string RootFolderName = "Luna";
+        #endif
 
         private static TaskFolder CreateRootFolder()
         {

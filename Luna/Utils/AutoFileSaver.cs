@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Xml.Serialization;
 
 namespace Luna.Utils
@@ -36,9 +37,11 @@ namespace Luna.Utils
             }
         }
 
-        public AutoFileSaver(string path, bool readOnly = false)
+        public AutoFileSaver(string fileName, bool readOnly = false)
         {
-            Path = path;
+            string root = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Path = System.IO.Path.Combine(root, fileName);
+
             ReadOnly = readOnly;
 
             ReloadFromDisk();
