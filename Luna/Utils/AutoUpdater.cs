@@ -21,6 +21,7 @@ namespace Luna.Utils
             }
 
             public string tag_name = "";
+            public string body = "";
             public Assets[] assets = new Assets[] { };
         }
 
@@ -88,6 +89,7 @@ namespace Luna.Utils
                     GithubModel.Assets asset = response.assets.First(e => e.name.ToLower().Contains("exe"));
 
                     Model.Version = newVersion.ToString();
+                    Model.Changelog = response.body;
                     Model.DownloadUrl = asset.browser_download_url;
                     Model.DownloadName = asset.name;
 

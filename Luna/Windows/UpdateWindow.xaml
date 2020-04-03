@@ -26,10 +26,14 @@
         </DataTemplate>
         <DataTemplate x:Key="NewUpdateTemplate">
             <StackPanel>
-                <Label Margin="0 0 0 16">
+                <Label Margin="0 0 0 8">
                     <TextBlock TextWrapping="Wrap">
                         Update to version <Run Text="{Binding Version}" /> is now available for download
                     </TextBlock>
+                </Label>
+                <Label Content="Changelog" FontWeight="Bold" />
+                <Label Margin="0 0 0 16">
+                    <TextBlock Text="{Binding Changelog}" TextWrapping="Wrap" />
                 </Label>
                 <Button Content="Download now" HorizontalAlignment="Right" Click="DownloadButton_Click" />
             </StackPanel>
