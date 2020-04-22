@@ -50,14 +50,14 @@ namespace Luna.Utils.Handlers
             task.Triggers.Add(new DailyTrigger { StartBoundary = start, DaysInterval = days });
             task.Actions.Add(new ExecAction(path, args, cwd));
             task.Settings.DisallowStartIfOnBatteries = false;
-            // task.Settings.StartWhenAvailable = true;
+            task.Settings.StartWhenAvailable = true;
 
             return folder.RegisterTaskDefinition(name, task);
         }
 
         private static Task CreateWakeUpTask(string name, TaskFolder folder, string path, string args)
         {
-            Logger.Info("Creating task scheduler daily task '{0}' for app at '{1}' and with args '{2}'", name, path, args);
+            Logger.Info("Creating task scheduler wake up task '{0}' for app at '{1}' and with args '{2}'", name, path, args);
 
             Task foundTask = folder.Tasks.FirstOrDefault(e => e.Path == name);
 
@@ -70,16 +70,9 @@ namespace Luna.Utils.Handlers
 
             TaskDefinition task = Service.NewTask();
 
-            task.Triggers.Add(new EventTrigger()
-            {
-                Subscription = "<QueryList><Query Id='0' Path='System'><Select Path='System'>*[System[Provider[@Name='Microsoft-Windows-Power-Troubleshooter'] and (Level=4 or Level=0) and (EventID=1)]]</Select></Query></QueryList>"
-            });
-
             task.Triggers.Add(new BootTrigger());
-
             task.Actions.Add(new ExecAction(path, args, cwd));
             task.Settings.DisallowStartIfOnBatteries = false;
-            // task.Settings.StartWhenAvailable = true;
 
             return folder.RegisterTaskDefinition(name, task);
         }

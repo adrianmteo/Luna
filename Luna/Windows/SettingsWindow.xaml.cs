@@ -86,13 +86,7 @@ namespace Luna.Windows
                 }
                 catch
                 {
-                    if (new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", "Run as administrator", "Close").ShowDialog() == true)
-                    {
-                        Process process = new Process();
-                        process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
-                        process.StartInfo.Verb = "runas";
-                        process.Start();
-                    }
+                    new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", "Close").ShowDialog();
                 }
                 finally
                 {
