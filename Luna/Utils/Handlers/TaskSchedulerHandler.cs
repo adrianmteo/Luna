@@ -51,6 +51,7 @@ namespace Luna.Utils.Handlers
             task.Actions.Add(new ExecAction(path, args, cwd));
             task.Settings.DisallowStartIfOnBatteries = false;
             task.Settings.StartWhenAvailable = true;
+            task.Principal.RunLevel = TaskRunLevel.Highest;
 
             return folder.RegisterTaskDefinition(name, task);
         }
@@ -73,6 +74,7 @@ namespace Luna.Utils.Handlers
             task.Triggers.Add(new BootTrigger());
             task.Actions.Add(new ExecAction(path, args, cwd));
             task.Settings.DisallowStartIfOnBatteries = false;
+            task.Principal.RunLevel = TaskRunLevel.Highest;
 
             return folder.RegisterTaskDefinition(name, task);
         }
