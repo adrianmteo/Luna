@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 
 namespace Luna.Utils.Handlers
 {
@@ -55,21 +56,43 @@ namespace Luna.Utils.Handlers
             return folder.RegisterTaskDefinition(name, task);
         }
 
+        private static Task CreateStartupTask(string name, TaskFolder folder, string path, string args)
+        {
+            Logger.Info("Creating task scheduler startup task '{0}' for app at '{1}' and with args '{2}'", name, path, args);
+
+            Task foundTask = folder.Tasks.FirstOrDefault(e => e.Path == name);
+
+            if (foundTask != null)
+            {
+                folder.DeleteTask(foundTask.Name);
+            }
+
+            string cwd = Path.GetDirectoryName(path);
+
+            TaskDefinition task = Service.NewTask();
+
+            task.Triggers.Add(new LogonTrigger() { UserId = WindowsIdentity.GetCurrent().Name });
+            task.Actions.Add(new ExecAction(path, args, cwd));
+            task.Settings.DisallowStartIfOnBatteries = false;
+
+            return folder.RegisterTaskDefinition(name, task);
+        }
+
         public static void UpdateAllTasks(DateTime lightThemeTime, DateTime darkThemeTime)
         {
             string path = Assembly.GetExecutingAssembly().Location;
 
-            DateTime now = DateTime.Now;
-            DateTime lightTime = new DateTime(now.Year, now.Month, now.Day, lightThemeTime.Hour, lightThemeTime.Minute, 0);
-            DateTime darkTime = new DateTime(now.Year, now.Month, now.Day, darkThemeTime.Hour, darkThemeTime.Minute, 0);
+            DateTime lightTime = DateTime.Today.AddHours(lightThemeTime.Hour).AddMinutes(lightThemeTime.Minute);
+            DateTime darkTime = DateTime.Today.AddHours(darkThemeTime.Hour).AddMinutes(darkThemeTime.Minute);
 
             try
             {
                 TaskFolder folder = CreateRootFolder();
 
-                CreateDailyTask("Light theme", folder, lightTime, path, "/light");
-                CreateDailyTask("Dark theme", folder, darkTime, path, "/dark");
-                CreateDailyTask("Auto update", folder, lightTime, path, "/update", 7);
+                CreateDailyTask("Light theme", folder, lightTime, path, "/change");
+                CreateDailyTask("Dark theme", folder, darkTime, path, "/change");
+                CreateStartupTask("Change theme", folder, path, "/change");
+                CreateDailyTask("Auto update", folder, lightTime, path, "/update", 3);
             }
             catch (Exception ex)
             {
