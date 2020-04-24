@@ -50,8 +50,11 @@ namespace Luna.Models
             }
             set
             {
-                _enabled = value;
-                RaisePropertyChanged();
+                if (CanChangeProperty())
+                {
+                    _enabled = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -66,8 +69,11 @@ namespace Luna.Models
             }
             set
             {
-                _lightThemeTime = value;
-                RaisePropertyChanged();
+                if (CanChangeProperty())
+                {
+                    _lightThemeTime = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -82,8 +88,11 @@ namespace Luna.Models
             }
             set
             {
-                _darkThemeTime = value;
-                RaisePropertyChanged();
+                if (CanChangeProperty())
+                {
+                    _darkThemeTime = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 

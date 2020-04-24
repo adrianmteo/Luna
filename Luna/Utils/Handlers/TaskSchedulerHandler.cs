@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 
 namespace Luna.Utils.Handlers
 {
@@ -51,14 +52,13 @@ namespace Luna.Utils.Handlers
             task.Actions.Add(new ExecAction(path, args, cwd));
             task.Settings.DisallowStartIfOnBatteries = false;
             task.Settings.StartWhenAvailable = true;
-            task.Principal.RunLevel = TaskRunLevel.Highest;
 
             return folder.RegisterTaskDefinition(name, task);
         }
 
-        private static Task CreateWakeUpTask(string name, TaskFolder folder, string path, string args)
+        private static Task CreateStartupTask(string name, TaskFolder folder, string path, string args)
         {
-            Logger.Info("Creating task scheduler wake up task '{0}' for app at '{1}' and with args '{2}'", name, path, args);
+            Logger.Info("Creating task scheduler startup task '{0}' for app at '{1}' and with args '{2}'", name, path, args);
 
             Task foundTask = folder.Tasks.FirstOrDefault(e => e.Path == name);
 
@@ -71,10 +71,9 @@ namespace Luna.Utils.Handlers
 
             TaskDefinition task = Service.NewTask();
 
-            task.Triggers.Add(new BootTrigger());
+            task.Triggers.Add(new LogonTrigger() { UserId = WindowsIdentity.GetCurrent().Name });
             task.Actions.Add(new ExecAction(path, args, cwd));
             task.Settings.DisallowStartIfOnBatteries = false;
-            task.Principal.RunLevel = TaskRunLevel.Highest;
 
             return folder.RegisterTaskDefinition(name, task);
         }
@@ -92,7 +91,7 @@ namespace Luna.Utils.Handlers
 
                 CreateDailyTask("Light theme", folder, lightTime, path, "/change");
                 CreateDailyTask("Dark theme", folder, darkTime, path, "/change");
-                CreateWakeUpTask("Change theme", folder, path, "/change");
+                CreateStartupTask("Change theme", folder, path, "/change");
                 CreateDailyTask("Auto update", folder, lightTime, path, "/update", 3);
             }
             catch (Exception ex)
