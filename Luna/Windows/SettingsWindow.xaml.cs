@@ -83,12 +83,19 @@ namespace Luna.Windows
                 {
                     if (new MessageWindow(this, "Run as administrator", "You need to run the program as administrator in order to make changes to the Task Scheduler.", "Run as administrator", "Close").ShowDialog() == true)
                     {
-                        Process process = new Process();
-                        process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
-                        process.StartInfo.Verb = "runas";
-                        process.Start();
+                        try
+                        {
+                            Process process = new Process();
+                            process.StartInfo.FileName = Assembly.GetExecutingAssembly().Location;
+                            process.StartInfo.Verb = "runas";
+                            process.Start();
 
-                        Environment.Exit(0);
+                            Environment.Exit(0);
+                        }
+                        catch
+                        {
+                            //
+                        }
                     }
 
                     return false;
@@ -121,7 +128,7 @@ namespace Luna.Windows
                 }
                 catch
                 {
-                    new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", "Close").ShowDialog();
+                    new MessageWindow(this, "An error occurred", "There was an error while writing to TaskScheduler. Please check logs for more info.", null, "Close").ShowDialog();
                 }
                 finally
                 {
