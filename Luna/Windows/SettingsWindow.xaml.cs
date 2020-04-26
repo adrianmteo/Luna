@@ -35,34 +35,6 @@ namespace Luna.Windows
             DataContext = _autoFileSaver.Model;
 
             _ = _autoUpdater.CheckForUpdates(false);
-
-            MigrateSettingsModel();
-        }
-
-        private void MigrateSettingsModel()
-        {
-            if (!_autoFileSaver.FoundOnDisk)
-            {
-                Logger.Warning("Running settings migration...");
-
-                Settings.Default.Upgrade();
-                Settings.Default.Save();
-
-                Logger.Warning("Settings upgrade done");
-
-                _autoFileSaver.Model.Enabled = Settings.Default.Enabled;
-                _autoFileSaver.Model.ChangeSystemTheme = Settings.Default.ChangeSystemTheme;
-                _autoFileSaver.Model.ChangeAppTheme = Settings.Default.ChangeAppTheme;
-                _autoFileSaver.Model.ChangeWallpaper = Settings.Default.ChangeWallpaper;
-                _autoFileSaver.Model.LightWallpaperPath = Settings.Default.LightWallpaperPath;
-                _autoFileSaver.Model.DarkWallpaperPath = Settings.Default.DarkWallpaperPath;
-                _autoFileSaver.Model.ChangeType = SettingsChangeType.Custom;
-
-                _autoFileSaver.Model.LightThemeTime = new DateTime(1, 1, 1, Settings.Default.LightThemeHour, Settings.Default.LightThemeMinute, 0);
-                _autoFileSaver.Model.DarkThemeTime = new DateTime(1, 1, 1, Settings.Default.DarkThemeHour + 12, Settings.Default.DarkThemeMinute, 0);
-
-                Logger.Warning("Settings migration done");
-            }
         }
 
         private bool SettingsModel_ShouldChangeProperty(object sender, PropertyChangedEventArgs e)
